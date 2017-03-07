@@ -1,0 +1,18 @@
+Full stack web framework
+	Language?
+	LAMP
+	
+sign in link
+menu to filter
+	
+Tenant view 
+	-read only, book viewing
+	
+Owner view
+	-set price
+	-shows all properties owned
+staff view
+	-properties allocated to them
+	-unable to edit property details
+David view
+	can edit property details
