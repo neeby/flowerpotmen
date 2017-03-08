@@ -1,12 +1,16 @@
 Full stack web framework
 	Language?
 	LAMP
-	
+
+DataBases to store data
 sign in link
-menu to filter
-	
+menu to file
+
 Tenant view 
-	-read only, book viewing
+	-read only, book viewing, 
+	- they are able to register details online and what there preferences are , for example if they aren't able to find something
+	on the website an then something becomes available the next day to there preferences they will be emailed that there is a rental
+	matching there needs. 
 	
 Owner view
 	-set price
@@ -18,3 +22,4 @@ staff view
 	-unable to edit property details
 David view
 	can edit property details
+	user friendly as David does not have much experience with computers. 
