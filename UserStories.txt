@@ -1,0 +1,21 @@
+[File Author: All]
+
+User Stories:
+
+1. As a tenant, I want to be able to log into the website, so that I can check the details of the properties.
+2. As a David, I want to be able to login, create, update and delete the properties, so that I can keep all of my information up to date.
+3. As a staff member, I want to be able to login to the website, so  that I can see what properties I have been assigned to.
+3b. As a property owner, I want to be able to login to the website, so that I can edit the details of my property.
+4. As a website user, I want to be able to search for properties, so that I can narrow the search results by a given set of criteria.
+5. As a tenant, I want to be able to book inspections, so that I can view a property.
+6. As a tenant, I want to to be able to view a calendar, so that I can see what inspection times are available.
+7. As a prospective tenant, I want to be able to search by a property ID, so that I can view specific properties. 
+8. As a prospective tenant, I want to be able to sign up to the website, so that I can view properties. 
+8a. As a staff member, I want to be able to sign up to the website, so that I can view the prospective tenants details.
+9. As a staff member, I want to be able to view information of the tenants, so that I can easily access the information if I need to.
+10. 
+11. As a tenant, I want to be able to view information of the properties (incl. location, price, rooms, carports, bathrooms, pictures etc), so that I can be englightened.
+12. As a guest, I want to be able to book an inspection and apply for the house, so that I don't have to do things in real life.
+13. As a staff member, 
+14/15. As a website user, I want to be able to contact the staff, so that I can say hi to them.
+16. As a David, I want there to be 5 different access controls for the website, so that I can control how much access people have over the website.
