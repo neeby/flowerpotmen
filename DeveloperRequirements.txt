@@ -11,6 +11,8 @@ Tenant view
 Owner view
 	-set price
 	-shows all properties owned
+	-update only there property details such as weekly rents and photos , but its only restricted to there own property.
+	
 staff view
 	-properties allocated to them
 	-unable to edit property details
