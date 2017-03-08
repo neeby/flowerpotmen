@@ -1,0 +1,46 @@
+List of Features
+
+1. A login option so that tenants can login to check details of theproperties.
+2. David can login and create, iupdate, delete his properties.
+3. Staff can login to see what properties they are assigned to, and property owners can login to edit details of the property.
+4. A search option for users to search for a property that meets their criteria. It would have 4 criteria:
+  The suburb name
+  More/less than a specific amount of weekly rent
+  Property type (Apartment, townhouse, house etc)
+5. Ability to book inspections
+6. A Calendar so that people can see what inspection times are available.
+7. Must have a property ID so that it can match with people searching from Gumtree.
+8. People need to be able to signup if they are new to the website.
+9. Record all the informaiton of tenants, copies of their agreements etc are stored on the site as well.
+10. Properties page.
+11. Information on each property including location, price, rooms, in the house, carports, bathrooms and pictures.
+12. Guest should have the option on this page to book an inspection or apply for the house.
+13. Guest must create an account to apply for anything but can view properties without one. 
+14. Must be an option to contact staff/David
+15. The page for each property should have an option to email the staff member.
+16. Needs to have 5 different tab for people who login with available screens:
+  Guests
+    View properties
+    Signup
+  David
+    View, Add, Edit, Delete Properties
+    Assign staff members
+    See appointments
+    See tenants
+    View, Add, Edit paperwork such as Rental Agreements
+    Send forms to tenants such as routine inspections
+    View, Add, Edit, Delete Staff Members
+ Staff
+    View property informaiton
+    View paperwork
+    See what properties they are assigned to
+ Property Owner
+    View properties
+    Edit their property
+    See Tenants
+    See paperwork
+  Tenant
+    Send paperwork to staff
+    Talk to staff
+    View properties
+    View paperwork
