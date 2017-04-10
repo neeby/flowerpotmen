@@ -19,18 +19,25 @@ define('DB_HOST', 'localhost');
  
 <?php
 //Step2
-$query = "SELECT * FROM Users";
+
+$ID = $_POST['userName'];
+$Password = $_POST['password'];
+
+ $query = "SELECT * FROM Users";
 mysqli_query($db, $query) or die('Error querying database.');
 
 $result = mysqli_query($db, $query);
 $row = mysqli_fetch_array($result);
 
-while ($row = mysqli_fetch_array($result)) {
- echo $row['ID'] . ' ' . $row['userName'] . ': ' . $row['password'] . ' ' . $row['Staff'] .'<br />';
- echo '1';
-}
+echo $row['ID'] . ' ' . $row['userName'] . ': ' . $row['password'] . ' ' . $row['Staff'] .'<br />';
+echo $ID . ' ' . $Password; 
+
+
 //Step 4
 mysqli_close($db);
+
+
+
 ?>
  
 </body>
