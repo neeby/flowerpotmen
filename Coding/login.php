@@ -18,19 +18,29 @@ define('DB_HOST', 'localhost');
  <h1>PHP connect to MySQL</h1>
  
 <?php
-//Step2
+//no entry in login will validate - fix via not submitting if username/passwod not completed at login
 
 $ID = $_POST['userName'];
 $Password = $_POST['password'];
 
- $query = "SELECT * FROM Users";
+ $query = "SELECT * FROM Users WHERE userName = '{$ID}'";
 mysqli_query($db, $query) or die('Error querying database.');
 
 $result = mysqli_query($db, $query);
 $row = mysqli_fetch_array($result);
 
-echo $row['ID'] . ' ' . $row['userName'] . ': ' . $row['password'] . ' ' . $row['Staff'] .'<br />';
-echo $ID . ' ' . $Password; 
+if ($row['userName'] == $ID) {
+	echo ("Username " . $ID . " found <br>");
+	if ($row['password'] == $Password) {
+		echo ("password correct");
+		
+	} else {
+		echo ("password not correct");
+	}
+} else {
+	echo ("Username " . $ID . " not found <br>");
+}
+
 
 
 //Step 4
