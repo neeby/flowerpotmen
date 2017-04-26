@@ -1,0 +1,23 @@
+<!--
+File name: 
+Date created:
+Purpose of file:
+-->
+
+<html>
+    <head>
+        <?PHP
+            include("functions.php");
+            session_start();
+            writeMenu($_SESSION['UAC_Level']);
+        ?>
+
+        <title>
+            
+        </title>
+    </head>
+
+    <body>
+
+    </body>
+</html>
