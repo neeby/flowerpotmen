@@ -1,14 +1,15 @@
 <?php
+/*
+define("DB_NAME", "FlowerPotMen");
+define("DB_USER", "root");
+define("DB_PASSWORD", "password");
+define("DB_HOST", "localhost");
 
-define('DB_NAME', 'FlowerPotMen');
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'password');
-define('DB_HOST', 'localhost');
-
+*/
+include "helpers.php";
 
 //Step1
- $db = mysqli_connect(DB_HOST ,DB_USER ,DB_PASSWORD ,DB_NAME)
- or die('Error connecting to MySQL server.');
+ $db = connectToDatabase ( );
 ?>
 
 <html>
@@ -18,37 +19,27 @@ define('DB_HOST', 'localhost');
  <h1>PHP connect to MySQL</h1>
  
 <?php
-//no entry in login will validate - fix via not submitting if username/passwod not completed at login
 
-$ID = $_POST['userName'];
-$Password = $_POST['password'];
 
- $query = "SELECT * FROM Users WHERE userName = '{$ID}'";
-mysqli_query($db, $query) or die('Error querying database.');
+	$ID = $_POST["userName"];
+	$Password = $_POST["password"];
 
-$result = mysqli_query($db, $query);
-$row = mysqli_fetch_array($result);
-
-if ($row['userName'] == $ID) {
-	echo ("Username " . $ID . " found <br>");
-	if ($row['password'] == $Password) {
-		echo ("password correct");
-		
+	//queryTable (Users, userName, $ID, $db);
+	$validated = checkPassword ($ID, $Password, $db);
+	insertToDB (Users, $db );
+	//deleteFromDB (Users, $db );
+	amendDB (Users, $db );
+	
+	if ($validated) {
+		echo ("validated");
 	} else {
-		echo ("password not correct");
+		echo ("Not validated");
 	}
-} else {
-	echo ("Username " . $ID . " not found <br>");
-}
 
-
-
-//Step 4
-mysqli_close($db);
-
-
+	mysqli_close($db);
 
 ?>
  
 </body>
+</html>
 </html>
