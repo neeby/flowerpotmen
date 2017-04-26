@@ -24,11 +24,11 @@ include "helpers.php";
 	$ID = $_POST["userName"];
 	$Password = $_POST["password"];
 
-	//queryTable (Users, userName, $ID, $db);
+	queryTable (Users, userName, $ID, $db);
 	$validated = checkPassword ($ID, $Password, $db);
-	insertToDB (Users, $db );
+	//insertToDB (Users, $db );
 	//deleteFromDB (Users, $db );
-	amendDB (Users, $db );
+	//amendDB (Users, $db );
 	
 	if ($validated) {
 		echo ("validated");
