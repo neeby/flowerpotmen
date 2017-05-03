@@ -1,1 +1,13 @@
-hddfshf
+- signup new user creates 2 new users (added through user tab just adds 1 entry)
+- DB needs primary key (userName)
+- occaisional login doesn't show correct position - may be my fat fingers typo - check if handles incorrect userName/password 
+		- nope incorrect password handled
+		- looks like fat fingers with username incorrect
+- dead links
+	-Admins
+	-Staff
+- edit users doesn't update
+- delete users doesn't work - done but needs neatening
+-property search works but currently Exact match only => returnShortPropertyList  - done
+	- currectly select option for filter - split to enable multiple filters to be applied
+- CRUD seems to be working correctly but needs ability to hide/disable links to tasks that the user doesn't have access to.

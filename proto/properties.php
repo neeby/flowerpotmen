@@ -7,7 +7,7 @@ Purpose of file:
 
 <?PHP
     session_start();
-    include('functions.php');
+    include_once('functions.php');
     writeMenu($_SESSION['UAC_Level']);
 ?>
 
@@ -27,6 +27,9 @@ Purpose of file:
                 <option value='Bed'>Bedroom Number</option>
                 <option value='Bath'>Bathroom Number</option>
                 <option value='Car'>Carport Number</option>
+				<option value='minWeeklyRent'>Min Weekly Rent</option>
+				<option value='maxWeeklyRent'>Max Weekly Rent</option>
+				
             </select>
             <input type='text' name='searchValue'>
             <br>

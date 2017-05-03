@@ -12,7 +12,7 @@ Purpose of file:
             global $debugBool;
             $debugBool = false;
 
-            include("functions.php");
+            include_once("functions.php");
             session_start();
             writeMenu($_SESSION['UAC_Level']);
             loginDB();
@@ -131,7 +131,14 @@ EOL;
                     echo $EditUserOutput($userName, $password, $Staff);
                 }
                 if(isset($_POST['userToDelete'])){
-                    echo "We have to delete a user.";
+                    echo "We have to delete a user.";//--------------------------------------------------add
+					
+					//works but need to turn into function
+					$sql = "DELETE FROM users WHERE userName='{$_POST['userToDelete']}'";
+					mysqli_query($db, $sql);
+					//---
+					
+					
                 }
                 if (isset($_POST['newUser_username'])){
                     echo "We have a user to create.";

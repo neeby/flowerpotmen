@@ -236,7 +236,8 @@ Purpose of file:
 
         switch($searchParam){
             case "Suburb":
-                $query = "SELECT * FROM properties WHERE suburb = '{$searchValue}'";
+                //$query = "SELECT * FROM properties WHERE suburb = '{$searchValue}'";
+				$query = "SELECT * FROM properties WHERE suburb LIKE '%{$searchValue}%'";
                 break;
             case "Post":
                 $query = "SELECT * FROM properties WHERE postcode = '{$searchValue}'";
@@ -249,6 +250,12 @@ Purpose of file:
                 break;
             case "Car":
                 $query = "SELECT * FROM properties WHERE car = '{$searchValue}'";
+                break;
+            case "minWeeklyRent"://--added
+                $query = "SELECT * FROM properties WHERE weeklyRent >= '{$searchValue}'";
+                break;
+            case "maxWeeklyRent"://--added
+                $query = "SELECT * FROM properties WHERE weeklyRent <= '{$searchValue}'";
                 break;
             case "*":
                 $query = "SELECT * FROM properties";
@@ -292,7 +299,9 @@ Purpose of file:
             $SearchResults[$xyz][6] = $row['car'];
             $SearchResults[$xyz][7] = $row['description'];
             $SearchResults[$xyz][8] = $row['image'];
-
+			//---added
+			$SearchResults[$xyz][9] = $row['weeklyRent'];
+//--
             $ResultCount++;
             $xyz++;
         }
@@ -341,6 +350,13 @@ Purpose of file:
                 $TableToPrint = $TableToPrint . $SearchResults[$i][6];
                 $TableToPrint = $TableToPrint . "</td></tr><tr><td colspan='2' rowspan='4'><b>Description:</b><br>";
                 $TableToPrint = $TableToPrint . $SearchResults[$i][7];
+				
+				
+//--added
+                $TableToPrint = $TableToPrint . "</td><td><b>Weekly Rent:</b> ";
+                $TableToPrint = $TableToPrint . $SearchResults[$i][9];
+
+//--
 
                 /* Handling the photo here. */
                 $ImageAddress = $SearchResults[$i][8];

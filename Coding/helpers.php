@@ -64,8 +64,9 @@ function checkPassword ($userName, $password, $db) {
  */
  function insertToDB ($table, $db ) {
 
-	$addData = "INSERT INTO {$table} (ID, userName, password, staff) VALUES ('2','extra','jdshf','1')";
-	if (mysqli_query($db, $addData)){
+	//placeholder values - will need to amend to add values as arg
+	$sql = "INSERT INTO {$table} (ID, userName, password, staff) VALUES ('2','extra','jdshf','1')";
+	if (mysqli_query($db, $sql)){
 		echo ("data added<br>");
 	} else {
 		echo ("nope<br>");
@@ -79,9 +80,10 @@ function checkPassword ($userName, $password, $db) {
  */
  function deleteFromDB ($table, $db ) {
 	 
-	$delData = "DELETE FROM {$table} WHERE ID='2'";
+	//placeholder values - will need to amend to add values as arg
+	$sql = "DELETE FROM {$table} WHERE ID='2'";
 	
-	if (mysqli_query($db, $delData)){
+	if (mysqli_query($db, $sql)){
 		echo ("data deleted<br>");
 	} else {
 		echo ("nah<br>" . mysqli_error($db));
@@ -95,9 +97,10 @@ function checkPassword ($userName, $password, $db) {
  */
  function amendDB ($table, $db ) {
 	
-	$editData = "UPDATE {$table} SET userName='edited' WHERE ID='2'";
+	//placeholder values - will need to amend to add values as arg
+	$sql = "UPDATE {$table} SET userName='edited' WHERE ID='2'";
 	
-	if (mysqli_query($db, $editData)){
+	if (mysqli_query($db, $sql)){
 		echo ("data updated<br>");
 	} else {
 		echo ("iie<br>" . mysqli_error($db));
