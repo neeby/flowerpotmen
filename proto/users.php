@@ -128,10 +128,11 @@ EOL;
                     $password = $results['password'];
                     $Staff = $results['Staff'];
                     
-                    echo $EditUserOutput($userName, $password, $Staff);
+                    //echo ("$EditUserOutput($userName, $password, $Staff)");
+					echo ("$EditUserOutput");
                 }
                 if(isset($_POST['userToDelete'])){
-                    echo "We have to delete a user.";//--------------------------------------------------add
+                    echo "User {$_POST['userToDelete']} deleted.";//--------------------------------------------------add
 					
 					//works but need to turn into function
 					$sql = "DELETE FROM users WHERE userName='{$_POST['userToDelete']}'";

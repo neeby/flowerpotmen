@@ -374,7 +374,7 @@ Purpose of file:
             echo $TablesToPrint;
         }
         mysqli_close($db);
-        }
+        }//end returnShortPropertyList
 
 
 
