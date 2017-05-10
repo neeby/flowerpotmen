@@ -2,8 +2,23 @@
     index.php
 */
 
+body.home {
+	
+	background: url("images/background.jpg") no-repeat;
+	background-size:cover;
+	
+}
+
 .LoginFormContain {
         text-align: center;
+}
+
+#register {
+	
+}
+
+#signIn {
+	
 }
 
 /*
@@ -13,6 +28,10 @@
 /*
     properties.php
 */
+
+body.property input[name=suburb]  {
+
+}
 
 /*
     Users.php

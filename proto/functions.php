@@ -54,8 +54,6 @@ Purpose of file:
         > Return UAC level to be run through defineUAC()
         */
 
-        
-
         global $db;
 
         $query = "SELECT * FROM users WHERE userName = '{$user}'";
@@ -86,8 +84,11 @@ Purpose of file:
         }
 
         mysqli_close($db);
-    }
+    }//end verifyUser
 
+/*
+	Function to set the access level for the session
+*/
     function defineUAC($UAC_User){
         switch ($UAC_User){
             case "1":
@@ -107,7 +108,7 @@ Purpose of file:
                 break;
         }
     }
-
+	
     function hyper($input){
         /*
             This function takes an input and converts it into a hyperlink/GET request.
@@ -117,8 +118,14 @@ Purpose of file:
         */
 
         switch($input){
+            case "SignIn":
+                return "<a id='signIn' href='signInPage.php'>Sign in</a>";
+                break;
+            case "Register":
+                return "<a id='register' href='registerPage.php'>Register</a>";
+                break;				
             case "Home":
-                return "<a href='home.php'>Home</a>";
+                return "<a href='index.php'>Home</a>";
                 break;
             case "Properties":
                 return "<a href='properties.php'>Properties</a>";
@@ -220,7 +227,7 @@ Purpose of file:
         $_SESSION['POST_Pass'] = $_POST[$pass];
     }
 
-    function returnShortPropertyList($searchParam, $searchValue){
+    function returnShortPropertyList(){
         /*
             > Connect to DB
             > Search Table
@@ -234,40 +241,78 @@ Purpose of file:
         global $db;
         global $SearchResults;
 
-        switch($searchParam){
-            case "Suburb":
-                //$query = "SELECT * FROM properties WHERE suburb = '{$searchValue}'";
-				$query = "SELECT * FROM properties WHERE suburb LIKE '%{$searchValue}%'";
+		$query = "SELECT * FROM properties";
+
+		
+		if (!empty($_GET['Suburb'])){
+			$query .= " WHERE suburb LIKE '%{$_GET['Suburb']}%'";
+		}
+		
+		if (!empty($_GET['Bed'])){
+			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
+			$query .= "bed = '{$_GET['Bed']}'";
+		}	
+
+		if (!empty($_GET['Bath'])){
+			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
+			$query .= "bath = '{$_GET['Bath']}'";
+		}
+
+		if (!empty($_GET['Car'])){
+			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
+			$query .= "car = '{$_GET['Car']}'";
+		}
+
+		if (!empty($_GET['minWeeklyRent'])){
+			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
+			$query .= "weeklyRent >= '{$_GET['minWeeklyRent']}'";
+		}		
+		
+		if (!empty($_GET['maxWeeklyRent'])){
+			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
+			$query .= "weeklyRent <= '{$_GET['maxWeeklyRent']}'";
+		}	
+		
+		if (!empty($_GET['searchParam'])){
+			$query = "SELECT * FROM properties";
+		}
+		
+		switch($placeholder){
+        //switch($searchParam){
+            case "suburb":
+				//$query = "SELECT * FROM properties WHERE suburb LIKE '%{$searchValue}%'";
                 break;
             case "Post":
-                $query = "SELECT * FROM properties WHERE postcode = '{$searchValue}'";
+              //  $query = "SELECT * FROM properties WHERE postcode = '{$searchValue}'";
                 break;
             case "Bed":
-                $query = "SELECT * FROM properties WHERE bed = '{$searchValue}'";
+               // $query = "SELECT * FROM properties WHERE bed = '{$searchValue}'";
                 break;
             case "Bath":
-                $query = "SELECT * FROM properties WHERE bath = '{$searchValue}'";
+               // $query = "SELECT * FROM properties WHERE bath = '{$searchValue}'";
                 break;
             case "Car":
-                $query = "SELECT * FROM properties WHERE car = '{$searchValue}'";
+               // $query = "SELECT * FROM properties WHERE car = '{$searchValue}'";
                 break;
-            case "minWeeklyRent"://--added
-                $query = "SELECT * FROM properties WHERE weeklyRent >= '{$searchValue}'";
+            case "minWeeklyRent":
+               // $query = "SELECT * FROM properties WHERE weeklyRent >= '{$searchValue}'";
                 break;
-            case "maxWeeklyRent"://--added
-                $query = "SELECT * FROM properties WHERE weeklyRent <= '{$searchValue}'";
+            case "maxWeeklyRent":
+                //$query = "SELECT * FROM properties WHERE weeklyRent <= '{$searchValue}'";
                 break;
             case "*":
-                $query = "SELECT * FROM properties";
+               // $query = "SELECT * FROM properties";
                 break;
             default:
+			
                 /* 
                     The only way that this default clause could be triggered is that if 
                     the user manually changes the searchParam GET value. In this case
                     we'll return them to properties.php with an error message.
                 */
-                header("Location: properties.php?error=invalidSearchParam");
-                exit();
+				
+                //header("Location: properties.php?error=invalidSearchParam");
+                //exit();
         }
         
         mysqli_query($db, $query) or die('Error querying database.');

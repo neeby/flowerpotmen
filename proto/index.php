@@ -12,11 +12,11 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
     <link rel='stylesheet'  type='text/css' href='stylesheet.css'>
 </head>
 
-<body>
+<body class="home">
 
     <?PHP
         session_start();
-        include('functions.php');
+        include_once('functions.php');
 
         /*
         Checking for _GET value 'Logout', if this is true, we call the logout function
@@ -70,7 +70,7 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
             unset($_POST['signup_passWord']);
         }
 
-
+/*
         $LoginForm = <<<EOL
 <div class='LoginFormContain'>
 <form action='home.php' method='POST'>
@@ -81,7 +81,7 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
 <a href="index.php?newUser=true">New User? Signup Here!</a>
 </div>
 EOL;
-
+*/
     $SignupForm = <<<EOL
 <div class='LoginFormContain'>
 <form action='index.php' method='POST'>
@@ -122,16 +122,10 @@ EOL;
                     break;
             }
         }
+		echo(hyper("SignIn") . "<br>" . hyper("Register"));
+	
     ?>
+	
 
-
-
-    
-Available Usernames/Passwords/AccessLevels:<br><br>
-
-Cat / catpassword / 1 (User)<br>
-Wolf / wolfpassword / 2 (Staff)<br>
-Dog / dogpassword / 3 (Admin)<br>
-Fox / foxpassword / 4 (Owner)<br>
 
 </body>

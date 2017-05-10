@@ -68,11 +68,12 @@ EOL;
 <form action='users.php' method='POST'>
 <table>
 Please enter updated user details:<br>
-Username: <input type='text' name='editUser_username'><br>
+<input type='hidden' name='originalUser' value="{$_POST['userToEdit']}">
+Username: <input type='text' name='editUser_username' value="{$_POST['userToEdit']}"><br>
 Password: <input type='password' name='editUser_password_1'><br>
 Confirm Password: <input type='password' name='editUser_password_2'><br>
 EOL;
-
+//print_r($_POST);
             debug($_SESSION['UAC_Level']);
             switch ($_SESSION['UAC_Level']){
                 case 'User':
@@ -176,6 +177,15 @@ EOL;
                         break;
                 }
             }
+			
+			if (isset($_POST['editUser_username'])){ 
+				$sql = "UPDATE users SET userName='{$_POST['editUser_username']}' WHERE userName='{$_POST['originalUser']}'";
+				echo($sql);
+				mysqli_query($db, $sql);	
+			}
+			
+			
+			
 
         
         ?>

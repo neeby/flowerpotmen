@@ -19,8 +19,9 @@ Purpose of file:
         <link rel='stylesheet'  type='text/css' href='stylesheet.css'>
     </head>
 
-    <body>
+    <body class="property">
         <br><br><form action="properties.php" method="GET" style='text-align: center;'>
+		<!--
             Search By: <select name='searchParam'>
                 <option value='Suburb'>Suburb</option>
                 <option value='Post'>Post Code</option>
@@ -29,9 +30,44 @@ Purpose of file:
                 <option value='Car'>Carport Number</option>
 				<option value='minWeeklyRent'>Min Weekly Rent</option>
 				<option value='maxWeeklyRent'>Max Weekly Rent</option>
-				
+			
             </select>
-            <input type='text' name='searchValue'>
+		-->
+		
+			<table>
+				<tr>
+					<td>
+						<label for="Suburb">Suburb:</label>
+						<input type='text' name='Suburb' value="<?php echo $_GET['Suburb'];?>">					
+					</td>
+					<td>
+						<label for="Post">Post:</label>
+						<input type='number' name='Post' value="<?php echo $_GET['Post'];?>">					
+					</td>
+					<td>
+						<label for="Bed">Bed:</label>
+						<input type='number' name='Bed' min="0" value="<?php echo $_GET['Bed'];?>">						
+					</td>
+					<td>
+						<label for="Bath">Bath:</label>
+						<input type='number' name='Bath' min="0" value="<?php echo $_GET['Bath'];?>">					
+					</td>
+					<td>
+						<label for="Car">Car:</label>
+						<input type='number' name='Car' min="0" value="<?php echo $_GET['Car'];?>">					
+					</td>
+					<td>
+						<label for="minWeeklyRent">Min Weekly Rent:</label>
+						<input type='number' id='minWeeklyRent' name='minWeeklyRent' min="0" onchange="document.getElementById('maxWeeklyRent').min=this.value;" value="<?php echo $_GET['minWeeklyRent'];?>">					
+					</td>
+					<td>
+						<label for="maxWeeklyRent">Max Weekly Rent:</label>
+						<input type='number' id='maxWeeklyRent' name='maxWeeklyRent' min="0" onchange="document.getElementById('minWeeklyRent').max=this.value;" value="<?php echo $_GET['maxWeeklyRent'];?>">					
+					</td>
+				</tr>		
+			</table>
+		
+			<input type='hidden' name='searchParam' value=''>
             <br>
             <input type='submit' value='Search'>
             <?PHP 
@@ -58,12 +94,20 @@ Purpose of file:
             relevant results.
         */
 
-        if(!empty($_GET['searchParam']) AND isset($_GET['searchValue'])){
+        //if(!empty($_GET['searchParam']) AND isset($_GET['searchValue'])){
+			
+		if(!empty($_GET['searchParam'])){
+
+            returnShortPropertyList('*', '');//return all
+        }			
+			
+		if(!empty($_GET['Suburb']) or isset($_GET['Post']) or isset($_GET['Bed']) or isset($_GET['Bath']) or isset($_GET['Car']) or isset($_GET['minWeeklyRent']) or isset($_GET['minWeeklyRent'])){
             /*
                 Now that there is a search paramater and a search value,
                 we can safely assume that there has been a search conducted.
             */
-            returnShortPropertyList($_GET['searchParam'], $_GET['searchValue']);
+			
+            returnShortPropertyList(); 
         }
         ?>
     </body>
