@@ -33,7 +33,7 @@ Purpose of file:
     function checkDB($debug){
         global $db;
 
-        $query = "SELECT * FROM users";
+        $query = "SELECT * FROM Users";//---------------change back
         if(mysqli_query($db, $query) or die('checkDB returned Error querying database.')){
             if($debug == '1'){
                 echo "Database connection successful. Testing with: '" . $query . "'";
@@ -41,6 +41,51 @@ Purpose of file:
             return true;
         }
     }
+	
+function queryUser ($value) {
+
+        global $db;
+
+        //$query = "SELECT * FROM Users WHERE userName = '{$value}'";//=========================change back to users when test done
+        $query = "SELECT * FROM Users WHERE userName = '{$value}'";
+		mysqli_query($db, $query) or die('Error querying database.');
+
+        $result = mysqli_query($db, $query);
+        $row = mysqli_fetch_array($result);
+
+		if (strlen ($row['userName'])>0) {
+			return true;
+
+		} else {
+			return false;
+		}
+		
+	
+}//end queryUser
+
+ function addUser ( $accessLvl) {
+
+	global $db;
+	
+	$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES ('" . $_POST['userName'] . "', '" . $_POST['pwd'] . "', '" . $accessLvl . "', '', '', '', NULL, '', '', '')";
+	
+	if (mysqli_query($db, $sql)){
+		echo ("data added<br>");
+	} else {
+		echo ("nope<br>");
+		echo $sql;
+	}
+	 
+ }//end insertToDB
+
+ function deleteUser ($user) {
+	
+	global $db;
+	
+	$sql = "DELETE FROM Users WHERE userName='{$user}'";
+	mysqli_query($db, $sql);
+	 
+ }//end deleteUser
 
     function verifyUser($user, $pass){
         /*
@@ -56,7 +101,7 @@ Purpose of file:
 
         global $db;
 
-        $query = "SELECT * FROM users WHERE userName = '{$user}'";
+        $query = "SELECT * FROM Users WHERE userName = '{$user}'";//=========================change back to users when test done
         mysqli_query($db, $query) or die('Error querying database.');
 
         $result = mysqli_query($db, $query);
@@ -64,7 +109,7 @@ Purpose of file:
 
         if ($row['userName'] == $user) {
             /* Username valid. Check for password. */
-            if ($row['password'] == $pass) {
+            if ($row['password'] == $pass) {//change to check against encrypted password
                 /* Password valid. Posting SESSION and Getting UAC level. */
                 
                 $_SESSION['POST_User'] = $_POST['userName'];
@@ -466,12 +511,12 @@ Purpose of file:
 
         /*
             Function = writes a user list
-            $options - View/Edit
+            $options - View/Edit/Delete
                 Viewing users just shows the tables
                 Edit includes a check box for the user to select and edit in another page.
         */
 
-        $query = "SELECT * FROM users";
+        $query = "SELECT * FROM Users";//change back
         $queryResult = mysqli_query($_SESSION['db'], $query) or die('Error querying database.');
 
         switch ($options){
@@ -500,9 +545,10 @@ Purpose of file:
                 echo "<div class='usersTable'><table><th>User to Delete</th><th>User Name</th><th>Password</th><th>User Access Level</th>";
 
                 while ($row = $queryResult->fetch_assoc()) {
+					
                     $Output = "<tr><td><input type='checkbox' name='userToDelete' value='" . $row['userName'] . "'></td>";
-                    $Output = $Output . "<td>" . $row['userName'] . "</td><td>" . $row['password'] . "</td><td>" . returnUACName($row['Staff']) . "</td></tr>";
-                    
+                    $Output .= "<td>" . $row['userName'] . "</td><td>" . $row['password'] . "</td><td>" . returnUACName($row['Staff']) . "</td></tr>";
+ 
                     echo $Output;
                 }
                 echo "</table>";

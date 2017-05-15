@@ -26,6 +26,9 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
         if(isset($_GET['logout'])){
             Logout();
         } 
+        if(isset($_SESSION['UAC_Level'])){
+            header("Location: home.php");
+        }
     
         if(isset($_POST['signup_userName']) AND isset($_POST['signup_passWord'])){
             global $db;

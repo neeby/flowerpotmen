@@ -32,6 +32,7 @@ Purpose of file:
             verifyUser($user, $pass); 
          }
          writeMenu($_SESSION['UAC_Level']);
+		 
     ?>
     
     <title>
@@ -41,4 +42,5 @@ Purpose of file:
 </head>
 
 <body>
+
 </body>
