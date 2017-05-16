@@ -227,7 +227,7 @@ EOL;
 					
 						if($newPassword1 == $newPassword2){
 							/* Passwords match, creating user. */
-							//$query = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES ('" . $newUsername . "', '" . $newPassword1 . "', '" . $newUAC[0] . "', '', '', '', NULL, '', '', '')";
+						//replace with userAdd or whatever i called it
 							$query = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES (";
 							$query .= "'{$newUsername}', ";
 							$query .= "'{$newPassword1}', ";
@@ -235,17 +235,15 @@ EOL;
 							$query .= "'{$_POST['firstName']}', ";
 							$query .= "'{$_POST['otherName']}', ";
 							$query .= "'{$_POST['surName']}', ";
+			
 							$query .= "'{$_POST['dob']}', ";
 							$query .= "'{$_POST['email']}', ";
 							$query .= "'{$_POST['tel']}', ";	
 							$query .= "'{$_POST['add']}'";								
 							$query .= ')';
-							
-	
-							//$query = "INSERT INTO Users (userName, password, Staff) VALUES ('" . $newUsername . "', '" . $newPassword1 . "', '" . $newUAC[0] . "')";
+
 							echo $query;
-							//echo $_SESSION['db'];
-							//print_r($_SESSION);
+
 							if(mysqli_query($_SESSION['db'], $query) or die('Error querying database when trying to input new user.')){
 								
 								header("Location: users.php?message=newuserSuccess");
@@ -262,8 +260,8 @@ EOL;
 		
                 if(isset($_POST['userToDelete'])){
 
-                    echo "User {$_POST['userToDelete']} deleted.";//--------------------------------------------------add
-					
+                    echo "User {$_POST['userToDelete']} deleted.";//------------------add loop to delete every user ticked - include unable to delete above your access lvl(inclusive?)
+					// loop through deleting each or add to an array if to be deleted - then cycle through array - 1st option probably
 					deleteUser($_POST['userToDelete']);
 					
                 }

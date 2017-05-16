@@ -63,17 +63,36 @@ function queryUser ($value) {
 	
 }//end queryUser
 
- function addUser ( $accessLvl) {
+
+function encryptPassword ($password){
+	
+	return crypt ($password,"pourAchunkOfSaltAllOverThis");
+}
+
+ function addUser ( $userName, $password, $Staff, $firstName, $otherName, $surName, $DOB, $email, $phone, $address) {
 
 	global $db;
+	$encryptedPassword = encryptPassword($_POST['pwd']);
+	//$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES ('" . $_POST['userName'] . "', '" . $encryptedPassword . "', '" . $accessLvl . "', '', '', '', NULL, '', '', '')";
+	//$DOB = NULLIF($DOB , '');
 	
-	$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES ('" . $_POST['userName'] . "', '" . $_POST['pwd'] . "', '" . $accessLvl . "', '', '', '', NULL, '', '', '')";
+	$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES (";
+	$sql .= "'{$userName}', ";
+	$sql .= "'{$encryptedPassword}', ";
+	$sql .= "'{$Staff}', ";
+	$sql .= "'{$firstName}', ";
+	$sql .= "'{$otherName}', ";
+	$sql .= "'{$surName}', ";
+	$sql .= "'{$DOB}', ";
+	$sql .= "'{$email}', ";
+	$sql .= "'{$phone}', ";	
+	$sql .= "'{$address}'";								
+	$sql .= ')';
 	
 	if (mysqli_query($db, $sql)){
-		echo ("data added<br>");
+		return true;
 	} else {
-		echo ("nope<br>");
-		echo $sql;
+		return false;
 	}
 	 
  }//end insertToDB

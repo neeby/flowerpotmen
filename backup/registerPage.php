@@ -2,36 +2,45 @@
 	include_once("functions.php");
 //check if submit is set
    if ( isset( $_POST['Submit'] ) ) {
-	//ensure username is unique
-	//Logout();
-	print_r($_POST);
+
 	loginDB();
 	if(queryUser ($_POST['userName'])){
 		echo ('User name already exists - please try a different user name.');
-		//todo repopulate form
-		
-		
+
 	} else {
-		//todo add user 
-		echo ('add user to DB');
+		//todo ensure form completed in full
+		$fieldsCompleted = 0;
+		//yes i know - missing cnPwd but the if pwd == conPwd ensures it must be completed
+		$fields = array('userName', 'pwd', 'firstName', 'otherName', 'surname', 'dob', 'email', 'tel', 'add');
+
+	foreach($fields AS $fieldname) { //Loop trough each field
+		if(isset($_POST[$fieldname]) && !empty($_POST[$fieldname])) {
+			$fieldsCompleted++;
+		} else {
+			//construct message here RE which fields incomplete if i feel like it - not really required for such a small form
+			break;
+		}
+	}//foreach	 
+	if ($fieldsCompleted == 9){
 		if ($_POST['pwd'] == $_POST['conPwd']){
-			addUser(1);
+			//addUser(1);
+			addUser ( $_POST['userName'], $_POST['pwd'], 1, $_POST['firstName'], $_POST['otherName'], $_POST['surname'], $_POST['dob'] , $_POST['email'] , $_POST['tel'] , $_POST['add'] );
 			//redirect to loged in page
 			$_SESSION['UAC_Level'] = "User";
 			$_SESSION['POST_User'] = $_POST['userName'];
-			$_SESSION['POST_Pass'] = $_POST['pwd'];			
+			$_SESSION['POST_Pass'] = $_POST['pwd'];	
+//logging in as visitor - should be logging in as User			
 			header("Location: home.php");
 		} else {
-			echo ('please confirm password matches');
-			//todo repopulate form
-		}
+			
+			echo ('Please ensure password and confirm password fields match.');
+		  }		
+	 } else {
+		echo ('Please ensure all fields are completed'); 
+	 }
+
 	}
    }//end isset[Submit]
-
-
-
-
-
 
 ?>
 
