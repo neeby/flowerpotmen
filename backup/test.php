@@ -9,24 +9,22 @@ Purpose of file:
 <head>
     <?PHP
 include_once('functions.php');
-	    session_start();
-   // loginDB();
-	$_SESSION['test'] = 'something';
-   echo "<h3> PHP List All Session Variables</h3>";
-
-print_r($_SESSION);
-
-    
-	
+		
 
 		
-		$password = "superEasyToBreakPassword";
 		
-		echo $password. '<br>';
-		echo crypt ($password,"pourAchunkOfSaltAllOverThis");
-		echo '<br>';
-		echo '<br>';
-		echo encryptPassword($password);
+		echo crypt ('catpassword',"pourAchunkOfSaltAllOverThis"). " = cat" . "<br>";
+		echo encryptPassword('catpassword') . " = cat<br>";
+		echo crypt ('wolfpassword',"pourAchunkOfSaltAllOverThis"). " = wolf" . "<br>";
+		echo encryptPassword('wolfpassword') . " = wolf<br>";
+		echo crypt ('dogpassword',"pourAchunkOfSaltAllOverThis"). " = dog" . "<br>";
+		echo encryptPassword('dogpassword') . " = dog<br>";
+		echo crypt ('foxpassword',"pourAchunkOfSaltAllOverThis"). " = fox" . "<br>";
+		echo encryptPassword('foxpassword') . " = fox<br>";
+		
+		
+		
+		
 		 
     ?>
     

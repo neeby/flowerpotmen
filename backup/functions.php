@@ -128,7 +128,7 @@ function encryptPassword ($password){
 
         if ($row['userName'] == $user) {
             /* Username valid. Check for password. */
-            if ($row['password'] == $pass) {//change to check against encrypted password
+            if ($row['password'] == encryptPassword($pass)) {//change to check against encrypted password
                 /* Password valid. Posting SESSION and Getting UAC level. */
                 
                 $_SESSION['POST_User'] = $_POST['userName'];
