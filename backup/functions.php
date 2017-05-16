@@ -565,7 +565,7 @@ function encryptPassword ($password){
 
                 while ($row = $queryResult->fetch_assoc()) {
 					
-                    $Output = "<tr><td><input type='checkbox' name='userToDelete' value='" . $row['userName'] . "'></td>";
+                    $Output = "<tr><td><input type='checkbox' name='userToDelete[]' value='" . $row['userName'] . "'></td>";
                     $Output .= "<td>" . $row['userName'] . "</td><td>" . $row['password'] . "</td><td>" . returnUACName($row['Staff']) . "</td></tr>";
  
                     echo $Output;

@@ -262,8 +262,16 @@ EOL;
 
                     echo "User {$_POST['userToDelete']} deleted.";//------------------add loop to delete every user ticked - include unable to delete above your access lvl(inclusive?)
 					// loop through deleting each or add to an array if to be deleted - then cycle through array - 1st option probably
-					deleteUser($_POST['userToDelete']);
+					//deleteUser($_POST['userToDelete']);
 					
+					if(!empty($_POST['userToDelete'])){
+					// Loop to store and display values of individual checked checkbox.
+						foreach($_POST['userToDelete'] as $selected){
+						//echo $selected."</br>";
+						deleteUser($selected);
+						}
+					}
+
                 }
 
             } else {
