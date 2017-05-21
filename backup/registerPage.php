@@ -1,5 +1,7 @@
 <?php
 	include_once("functions.php");
+	include_once('userFunctions.php');
+	
 //check if submit is set
    if ( isset( $_POST['Submit'] ) ) {
 
@@ -10,8 +12,8 @@
 	} else {
 		//todo ensure form completed in full
 		$fieldsCompleted = 0;
-		//yes i know - missing cnPwd but the if pwd == conPwd ensures it must be completed
-		$fields = array('userName', 'pwd', 'firstName', 'otherName', 'surname', 'dob', 'email', 'tel', 'add');
+		//yes i know - missing conPwd but the if pwd == conPwd ensures it must be completed & otherName is optional
+		$fields = array('userName', 'pwd', 'firstName', 'surname', 'dob', 'email', 'tel', 'add');
 
 	foreach($fields AS $fieldname) { //Loop trough each field
 		if(isset($_POST[$fieldname]) && !empty($_POST[$fieldname])) {
@@ -21,12 +23,12 @@
 			break;
 		}
 	}//foreach	 
-	if ($fieldsCompleted == 9){
+	if ($fieldsCompleted == 8){
 		if ($_POST['pwd'] == $_POST['conPwd']){
-			//addUser(1);
-			addUser ( $_POST['userName'], $_POST['pwd'], 1, $_POST['firstName'], $_POST['otherName'], $_POST['surname'], $_POST['dob'] , $_POST['email'] , $_POST['tel'] , $_POST['add'] );
-			//redirect to loged in page
-			$_SESSION['UAC_Level'] = "User";
+			$UAC_User = 1;
+			addUser ( $_POST['userName'], $_POST['pwd'], $UAC_User, $_POST['firstName'], $_POST['otherName'], $_POST['surname'], $_POST['dob'] , $_POST['email'] , $_POST['tel'] , $_POST['add'] );
+			
+			defineUAC($UAC_User);
 			$_SESSION['POST_User'] = $_POST['userName'];
 			$_SESSION['POST_Pass'] = $_POST['pwd'];	
 //logging in as visitor - should be logging in as User			

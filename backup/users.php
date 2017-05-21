@@ -13,6 +13,7 @@ Purpose of file:
             $debugBool = false;
 
             include_once("functions.php");
+			include_once("userFunctions.php");
             session_start();
             writeMenu($_SESSION['UAC_Level']);
             loginDB();
@@ -98,11 +99,11 @@ Please enter updated user details for User {$_POST['userToEdit']}:<br>
 	</tr>				
 	<tr>
 		<td><label for="tel">Telephone: </label></td>
-		<td><input type="text" name="tel" /><br value="{$telephone}"/></td>
+		<td><input type="text" name="tel" value="{$telephone}"/></td>
 	</tr>				
 	<tr>
 		<td><label for="add">Address: </label></td>
-		<td><input type="text" name="add" /><br value="{$address}"/></td>
+		<td><input type="text" name="add" value="{$address}"/></td>
 	</tr>	
 
 
@@ -227,51 +228,30 @@ EOL;
 					
 						if($newPassword1 == $newPassword2){
 							/* Passwords match, creating user. */
-						//replace with userAdd or whatever i called it
-							$query = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES (";
-							$query .= "'{$newUsername}', ";
-							$query .= "'{$newPassword1}', ";
-							$query .= "'{$newUAC[0]}', ";
-							$query .= "'{$_POST['firstName']}', ";
-							$query .= "'{$_POST['otherName']}', ";
-							$query .= "'{$_POST['surName']}', ";
-			
-							$query .= "'{$_POST['dob']}', ";
-							$query .= "'{$_POST['email']}', ";
-							$query .= "'{$_POST['tel']}', ";	
-							$query .= "'{$_POST['add']}'";								
-							$query .= ')';
-
-							echo $query;
-
-							if(mysqli_query($_SESSION['db'], $query) or die('Error querying database when trying to input new user.')){
+							
+							if(addUser ( $newUsername, $newPassword1, $newUAC[0], $_POST['firstName'], $_POST['otherName'], $_POST['surName'], $_POST['dob'], $_POST['email'], $_POST['tel'], $_POST['add']) or die('Error querying database when trying to input new user.')){
 								
 								header("Location: users.php?message=newuserSuccess");
 								exit();
-							}
+							}							
+							
 						} else {
 							/* Passwords don't match, return to users with error. */
 							header("Location: users.php?message=newuserFailure");
 							exit();
 						}
-
-						
                 }
 		
                 if(isset($_POST['userToDelete'])){
 
-                    echo "User {$_POST['userToDelete']} deleted.";//------------------add loop to delete every user ticked - include unable to delete above your access lvl(inclusive?)
-					// loop through deleting each or add to an array if to be deleted - then cycle through array - 1st option probably
-					//deleteUser($_POST['userToDelete']);
+                    echo "User {$_POST['userToDelete']} deleted.";
 					
 					if(!empty($_POST['userToDelete'])){
-					// Loop to store and display values of individual checked checkbox.
+
 						foreach($_POST['userToDelete'] as $selected){
-						//echo $selected."</br>";
 						deleteUser($selected);
 						}
 					}
-
                 }
 
             } else {
@@ -307,9 +287,24 @@ EOL;
             }
 			
 			if (isset($_POST['editUser_username'])){ 
-				$sql = "UPDATE Users SET userName='{$_POST['editUser_username']}' WHERE userName='{$_POST['originalUser']}'";
-				echo($sql);
-				mysqli_query($db, $sql);	
+			//[`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`]
+			$updatedUserDetails = array(
+				"userName" => "{$_POST['editUser_username']}",
+				"password" => "{$_POST['editUser_password_1']}",
+				"Staff" => 1,
+				"firstName" => "{$_POST['firstName']}",
+				"otherName" => "{$_POST['otherName']}",
+				"surName" => "{$_POST['surname']}",
+				"DOB" => date("Y-m-d", strtotime($_POST['dob'])),
+				"email" => "{$_POST['email']}",	
+				"phone" => "{$_POST['tel']}",
+				"address" => "{$_POST['add']}",
+			);
+				echo "user to edit is " . $_POST['originalUser'] . "<br>";
+				editUser ( $_POST['originalUser'], $updatedUserDetails);
+				//$sql = "UPDATE Users SET userName='{$_POST['editUser_username']}' WHERE userName='{$_POST['originalUser']}'";
+				//print_r($updatedUserDetails);
+				//mysqli_query($db, $sql);	
 			}
 
         ?>

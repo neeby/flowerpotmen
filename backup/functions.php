@@ -5,9 +5,11 @@ Purpose of file:
     > Create a master file of referenceable functions.
 -->
 <head>
+
     <link rel='stylesheet'  type='text/css' href='stylesheet.css'>
 </head>
 <?PHP
+
     function loginDB(){
         /*
         > Define required things
@@ -41,71 +43,20 @@ Purpose of file:
             return true;
         }
     }
-	
-function queryUser ($value) {
 
-        global $db;
-
-        //$query = "SELECT * FROM Users WHERE userName = '{$value}'";//=========================change back to users when test done
-        $query = "SELECT * FROM Users WHERE userName = '{$value}'";
-		mysqli_query($db, $query) or die('Error querying database.');
-
-        $result = mysqli_query($db, $query);
-        $row = mysqli_fetch_array($result);
-
-		if (strlen ($row['userName'])>0) {
-			return true;
-
-		} else {
-			return false;
-		}
-		
-	
-}//end queryUser
-
-
+/*
+    <summary>
+		Function to encrypt a password.
+    </summary>
+    <param name="$password">Password to be encrypted</param>
+    <returns>the encrypted password</returns>
+*/
 function encryptPassword ($password){
 	
 	return crypt ($password,"pourAchunkOfSaltAllOverThis");
-}
-
- function addUser ( $userName, $password, $Staff, $firstName, $otherName, $surName, $DOB, $email, $phone, $address) {
-
-	global $db;
-	$encryptedPassword = encryptPassword($_POST['pwd']);
-	//$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES ('" . $_POST['userName'] . "', '" . $encryptedPassword . "', '" . $accessLvl . "', '', '', '', NULL, '', '', '')";
-	//$DOB = NULLIF($DOB , '');
 	
-	$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES (";
-	$sql .= "'{$userName}', ";
-	$sql .= "'{$encryptedPassword}', ";
-	$sql .= "'{$Staff}', ";
-	$sql .= "'{$firstName}', ";
-	$sql .= "'{$otherName}', ";
-	$sql .= "'{$surName}', ";
-	$sql .= "'{$DOB}', ";
-	$sql .= "'{$email}', ";
-	$sql .= "'{$phone}', ";	
-	$sql .= "'{$address}'";								
-	$sql .= ')';
+}//end encryptPassword
 	
-	if (mysqli_query($db, $sql)){
-		return true;
-	} else {
-		return false;
-	}
-	 
- }//end insertToDB
-
- function deleteUser ($user) {
-	
-	global $db;
-	
-	$sql = "DELETE FROM Users WHERE userName='{$user}'";
-	mysqli_query($db, $sql);
-	 
- }//end deleteUser
-
     function verifyUser($user, $pass){
         /*
         > Destory previous session through Logout()
@@ -236,7 +187,7 @@ function encryptPassword ($password){
         $StaffMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Logout"));
         $UserMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
         $VisitorMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
-        
+        //$VisitorMenuList = array(hyper("Properties"), hyper("SignIn"), hyper("Register"));
         /* 
             Here we pray that the session stuff is working as it should. 
             There should probably be a check in here somewhere. TODO probs.
