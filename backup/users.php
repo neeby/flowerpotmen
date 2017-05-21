@@ -264,13 +264,16 @@ EOL;
                         echo $NewUserOutput;
                         break;
                     case 'View':
-                        writeUserList('View');
+                        //writeUserList('View');
+						writeUserListFull('View');
                         break;
                     case 'Edit':
-                        writeUserList('Edit');
+                        //writeUserList('Edit');
+						writeUserListFull('Edit');
                         break;
                     case 'Delete':
-                        writeUserList('Delete');
+                        //writeUserList('Delete');
+						writeUserListFull('Delete');
                         break;
                 }   
             }
@@ -302,9 +305,7 @@ EOL;
 			);
 				echo "user to edit is " . $_POST['originalUser'] . "<br>";
 				editUser ( $_POST['originalUser'], $updatedUserDetails);
-				//$sql = "UPDATE Users SET userName='{$_POST['editUser_username']}' WHERE userName='{$_POST['originalUser']}'";
-				//print_r($updatedUserDetails);
-				//mysqli_query($db, $sql);	
+
 			}
 
         ?>

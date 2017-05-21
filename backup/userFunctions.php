@@ -81,11 +81,11 @@ function queryUser ($value) {
 
 	$db = $_SESSION['db'];
 	$encryptedPassword = encryptPassword($updatedUserDetails["password"]);
-	print_r($updatedUserDetails);
+
 	foreach ($updatedUserDetails as $key => $value) {
 		
 		$sql = "UPDATE Users SET {$key}='{$value}' WHERE userName='{$userName}'";
-		echo $sql . "<br>";
+		//echo $sql . "<br>";
 		if (mysqli_query($db, $sql)){
 			//return true;
 		} else {
@@ -161,5 +161,100 @@ function queryUser ($value) {
 	}
 	 
  }//end editUserPassword 
+ 
+ /*
+    <summary>
+		Modified version of Cam's function to display database in view/edit/delete forms
+		from Functions.php so i can modify things without breaking 
+    </summary>
+    <param name="$options">string to choose which table to display 
+	Edit - Displays Edit table form
+	Delete - Displays Delete table form
+	Anything else displays view table form
+	</param>
+*/
+function writeUserListFull($options){//name changed or will break with Cam's
+
+	//TODO
+	//add Access level checks - so someone can only edit/delete/create the appropriate lvl
+
+	$db = $_SESSION['db'];
+	$query = "SELECT * FROM Users";
+	$queryResult = mysqli_query($db, $query) or die('Error querying database.');
+
+	//create table headings
+	$tableHead = "<form action='users.php' method='POST'>";
+	switch ($options){
+		case 'Edit':
+			$tableHead .= "<div class='usersTable'><table><th>User to Edit</th>";
+			break;
+		case 'Delete':
+			$tableHead .= "<div class='usersTable'><table><th>User(s) to Delete</th>";
+			break;	
+		default:
+		//view
+		$tableHead = "<div class='usersTable'><table>";
+	}
+	
+	$tableHead .="<th>User Name</th>";
+	$tableHead .="<th>Access Level</th>";
+	$tableHead .="<th>First Name</th>";
+	$tableHead .="<th>Other Name</th>";
+	$tableHead .="<th>Surname</th>";
+	$tableHead .="<th>DOB</th>";
+	$tableHead .="<th>Email</th>";
+	$tableHead .="<th>Phone</th>";
+	$tableHead .="<th>Address</th>";
+
+	echo $tableHead;
+	
+//contents of table	
+	while ($row = $queryResult->fetch_assoc()){
+		
+		switch ($options){
+			case 'Edit':
+				$tableBody = "<tr><td><input type='radio' name='userToEdit' value='" . $row['userName'] . "'></td>";
+				break;
+			case 'Delete':
+				$tableBody = "<tr><td><input type='checkbox' name='userToDelete[]' value='" . $row['userName'] . "'></td>";
+				break;	
+			default:
+			//view
+			$tableBody = "<tr>";
+		}
+		$tableBody .= "<td>";
+		$tableBody .= $row['userName'];
+		$tableBody .= "</td><td>";
+		$tableBody .= returnUACName($row['Staff']) ;
+		$tableBody .= "</td><td>";
+		$tableBody .= $row['firstName'];
+		$tableBody .= "</td><td>";
+		$tableBody .= $row['otherName'];
+		$tableBody .= "</td><td>";
+		$tableBody .= $row['surName'];
+		$tableBody .= "</td><td>";
+		$tableBody .= $row['DOB'];
+		$tableBody .= "</td><td>";
+		$tableBody .= $row['email'];
+		$tableBody .= "</td><td>";
+		$tableBody .= $row['phone'];
+		$tableBody .= "</td><td>";
+		$tableBody .= $row['address'];
+		$tableBody .= "</td>";	
+		
+		echo $tableBody;
+	}
+	echo "</table>";
+	switch ($options){
+		case 'Edit':                
+			echo "<br><input type='submit' value='Edit Selected User'></form>";
+			break;
+		case 'Delete':
+			echo "<br><input type='submit' value='Delete Selected User'></form></div>";
+			break;
+	}
+ }//end writeUserListFull
+ 
+ 
 
 ?>
