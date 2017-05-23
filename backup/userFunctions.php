@@ -93,7 +93,7 @@ function queryUser ($value) {
 			return false;
 		}
 	}	
-	 
+	return true;
  }//end editUser
 
  /*

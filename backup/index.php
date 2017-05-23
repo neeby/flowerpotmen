@@ -126,9 +126,9 @@ EOL;
                     break;
             }
         }
-		writeMenu("Visitor");
-		echo(hyper("SignIn") . "<br>" . hyper("Register"));
-				
+		writeMenu();
+		//echo(hyper("SignIn") . "<br>" . hyper("Register"));
+		//print_r($_SESSION)		
 		
     ?>
 

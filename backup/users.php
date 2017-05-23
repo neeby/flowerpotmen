@@ -15,7 +15,7 @@ Purpose of file:
             include_once("functions.php");
 			include_once("userFunctions.php");
             session_start();
-            writeMenu($_SESSION['UAC_Level']);
+            writeMenu();
             loginDB();
             checkDB(0);
         
@@ -244,12 +244,13 @@ EOL;
 		
                 if(isset($_POST['userToDelete'])){
 
-                    echo "User {$_POST['userToDelete']} deleted.";
+                    
 					
 					if(!empty($_POST['userToDelete'])){
 
 						foreach($_POST['userToDelete'] as $selected){
 						deleteUser($selected);
+						echo "User {$selected} deleted.<br>";
 						}
 					}
                 }
@@ -303,11 +304,15 @@ EOL;
 				"phone" => "{$_POST['tel']}",
 				"address" => "{$_POST['add']}",
 			);
-				echo "user to edit is " . $_POST['originalUser'] . "<br>";
-				editUser ( $_POST['originalUser'], $updatedUserDetails);
+				
+				if(editUser ( $_POST['originalUser'], $updatedUserDetails)){
+					echo "User " . $_POST['originalUser'] . " details updated.<br>";	
+				} else {
+					echo "CARE - User " . $_POST['originalUser'] . " details not updated.<br>";
+				}
 
 			}
-
+		//print_r($_SESSION);
         ?>
     </body>
 </html>

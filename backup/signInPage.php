@@ -122,12 +122,13 @@ EOL;
                     break;
             }
         }
+		//print_r($_SESSION);
     ?>
 
 
 
     
-Available Usernames/Passwords/AccessLevels:<br><br>
+<br><br>Available Usernames/Passwords/AccessLevels:<br><br>
 
 Cat / catpassword / 1 (User)<br>
 Wolf / wolfpassword / 2 (Staff)<br>

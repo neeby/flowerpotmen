@@ -179,15 +179,14 @@ function encryptPassword ($password){
         session_destroy();
     }
 
-    function writeMenu($UAC_Level){
-        global $UAC_Level;
+    function writeMenu(){
 
         $OwnerMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Admins"), hyper("Logout"));
         $AdminMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Logout"));
         $StaffMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Logout"));
         $UserMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
-        $VisitorMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
-        //$VisitorMenuList = array(hyper("Properties"), hyper("SignIn"), hyper("Register"));
+        //$VisitorMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
+        $VisitorMenuList = array(hyper("Properties"), hyper("SignIn"), hyper("Register"));
         /* 
             Here we pray that the session stuff is working as it should. 
             There should probably be a check in here somewhere. TODO probs.
@@ -291,44 +290,6 @@ function encryptPassword ($password){
 		if (!empty($_GET['searchParam'])){
 			$query = "SELECT * FROM properties";
 		}
-		
-		switch($placeholder){
-        //switch($searchParam){
-            case "suburb":
-				//$query = "SELECT * FROM properties WHERE suburb LIKE '%{$searchValue}%'";
-                break;
-            case "Post":
-              //  $query = "SELECT * FROM properties WHERE postcode = '{$searchValue}'";
-                break;
-            case "Bed":
-               // $query = "SELECT * FROM properties WHERE bed = '{$searchValue}'";
-                break;
-            case "Bath":
-               // $query = "SELECT * FROM properties WHERE bath = '{$searchValue}'";
-                break;
-            case "Car":
-               // $query = "SELECT * FROM properties WHERE car = '{$searchValue}'";
-                break;
-            case "minWeeklyRent":
-               // $query = "SELECT * FROM properties WHERE weeklyRent >= '{$searchValue}'";
-                break;
-            case "maxWeeklyRent":
-                //$query = "SELECT * FROM properties WHERE weeklyRent <= '{$searchValue}'";
-                break;
-            case "*":
-               // $query = "SELECT * FROM properties";
-                break;
-            default:
-			
-                /* 
-                    The only way that this default clause could be triggered is that if 
-                    the user manually changes the searchParam GET value. In this case
-                    we'll return them to properties.php with an error message.
-                */
-				
-                //header("Location: properties.php?error=invalidSearchParam");
-                //exit();
-        }
         
         mysqli_query($db, $query) or die('Error querying database.');
 

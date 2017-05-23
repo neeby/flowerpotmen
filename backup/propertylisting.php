@@ -9,7 +9,7 @@ Purpose of file:
         <?PHP
             include("functions.php");
             session_start();
-            writeMenu($_SESSION['UAC_Level']);
+            writeMenu();
         
             $PropertyID = $_GET['id'];
         ?>

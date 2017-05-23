@@ -1,7 +1,7 @@
 <?php
 	include_once("functions.php");
 	include_once('userFunctions.php');
-	
+	session_start();
 //check if submit is set
    if ( isset( $_POST['Submit'] ) ) {
 
@@ -10,9 +10,9 @@
 		echo ('User name already exists - please try a different user name.');
 
 	} else {
-		//todo ensure form completed in full
+		//ensure form completed in full
 		$fieldsCompleted = 0;
-		//yes i know - missing conPwd but the if pwd == conPwd ensures it must be completed & otherName is optional
+		//yes i know - missing conPwd & otherName but the if pwd == conPwd ensures conPwd must be completed & otherName is optional
 		$fields = array('userName', 'pwd', 'firstName', 'surname', 'dob', 'email', 'tel', 'add');
 
 	foreach($fields AS $fieldname) { //Loop trough each field
@@ -25,7 +25,7 @@
 	}//foreach	 
 	if ($fieldsCompleted == 8){
 		if ($_POST['pwd'] == $_POST['conPwd']){
-			$UAC_User = 1;
+			$UAC_User = "1";
 			addUser ( $_POST['userName'], $_POST['pwd'], $UAC_User, $_POST['firstName'], $_POST['otherName'], $_POST['surname'], $_POST['dob'] , $_POST['email'] , $_POST['tel'] , $_POST['add'] );
 			
 			defineUAC($UAC_User);
@@ -108,15 +108,7 @@
 
 <?php
 
-//check if submit is set
-
-
-
-//ensure username is unique
-
-//add new user 
-
-
+//print_r($_SESSION);
 
 ?>
 

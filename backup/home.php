@@ -31,8 +31,8 @@ Purpose of file:
 
             verifyUser($user, $pass); 
          }
-         writeMenu($_SESSION['UAC_Level']);
-		 
+         writeMenu();
+		 //print_r($_SESSION);
     ?>
     
     <title>

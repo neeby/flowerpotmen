@@ -1,13 +1,105 @@
-- signup new user creates 2 new users (added through user tab just adds 1 entry)
-- DB needs primary key (userName)
+- Signed up to AWS - launched ec2 server and installed lamp (painful - instructions are outdated)
+- downloaded putty to convert key from .pem to .ppk to add to filezilla 
+- AWS - security group created and user details added for all group members
+- signup new user creates 2 new users (added through user tab just adds 1 entry) - fixed
+- DB needs primary key (userName) - completed
 - occaisional login doesn't show correct position - may be my fat fingers typo - check if handles incorrect userName/password 
 		- nope incorrect password handled
-		- looks like fat fingers with username incorrect
-- dead links
-	-Admins
-	-Staff
-- edit users doesn't update
-- delete users doesn't work - done but needs neatening
--property search works but currently Exact match only => returnShortPropertyList  - done
+		- nope fat fingers with username handeled correctly - invalid username shows error message
+			-should be corrected now - occasional fault while reloading website while logged in 
+				- new users get logged in as visitors - fixed (forgot to start session, so switch case used default)
+- dead links to be updated/removed
+	-Admins - maybe remove? if Jesse doesn't need it could be merged with Users tab.
+	-Staff - Jesse stuff here
+- edit users doesn't update - updated to edit username - updated to edit all fields
+- delete users doesn't work 
+	- done but needs refactoring 	
+		- re-written as it's own function in userFunctions.php
+-property search works but currently Exact match only => returnShortPropertyList  - updated so suburb is "contains" instead of exact match
 	- currectly select option for filter - split to enable multiple filters to be applied
-- CRUD seems to be working correctly but needs ability to hide/disable links to tasks that the user doesn't have access to.
+		- completed => can filter by anything in database (plus min/max set dynamically for rent ranges so you aren't able to search by impossible queries)
+- CRUD seems to be working correctly (courtesy of Cam) but needs ability to hide/disable links to tasks that the user doesn't have access to.
+- Home page in progress - dummy background image added + links to sign in & register new user - maybe redirect to properties page with visitor access as homepage?
+- Database table for users (mock version) redesigned to Users table with all required fields & primary key
+- integrated Ben's register user form (self signup) with my userFunctions (for users added via admin)
+- Password encryption added - surprisingly easy.
+- code re-write => refactored users.php to move likely repeatable code blocks to userFunctions.php to be called as needed
+
+
+
+//ToDo
+
+forgot to add gumtree id search field - trivial addition => add after Jesse finishes updating his tables
+add redirect if $_SESSION['UAC_Level'] isn't sufficient for area
+
+//overall status
+
+Status			release 1
+
+			S-0A: Logging into the website as different user types
+			Task ID	Task Description	Estimate	Taken
+done			T-0A	Create a login/signup page	1.5	
+done			T-0B	Establish a SQL Server and run PHP to add and pull information	3	
+done			T-0C	Give different access levels based on what login is given	2	
+
+			S-0B: Signing up to the site
+			Task ID	Task Description	Estimate	Taken
+done			T-1A	Create a form for signup	1	
+done			T-1B	Add people to the database	2	
+			T-1C	Check acceptance criteria and test	1	
+
+			S-0C: Managing the accounts as David (Access Control)	
+
+to be added			T-2A	Be able to login as David	1	
+done			T-2B	Have a page where you can view all current members and use CRUD	3	
+done			T-2C	Be able to access properties and CRUD	3	
+			T-2D	Check acceptance criteria and test	1	
+				Story Points: 16	Total Hours:	8	
+			S-0D: Mediator Role	
+			Task ID	Task Description	Estimate	Taken
+done?			T-3A	Have a login role that has almost the same access as David	1	
+			T-3B	Be able to approve changes to the site from staff and property owners.	1	
+done			T-3C	Have rights to be able to Create, Update, Delete	1	
+
+			Release 2
+
+			S-1A: Have A Search Engine
+			Task ID	Task Description	Estimate	Taken
+done			T-4A	Create a search panel page using HTML	1.5	
+done			T-4B	Use SQL and PHP to search the database for results	6	
+done			T-4C	Display results on the page	1.5	
+done			T-4D	Be able to filter by categories (price, rooms, house location etc.)	4.5	
+to be added			T-4E	Be able to search using the property ID given on gumtree.	.5	
+			AT01	Acceptance test	1	
+				
+			S-1B: Property View Calendar
+			Task ID	Task Description	Estimate	Taken
+			T-5A	Display a calendar of availability on the website.	3	
+			T-5B	Be able to change the availability using PHP.	5	
+			T-5C	Book an inspection time on the calendar.	3	
+			AT02	Acceptance test	1	
+				
+			S-1C: View Property Information	
+			Task ID	Task Description	Estimate	Taken
+done			T-6A	Have a separate webpage for each property.	1.5	
+done			T-6B	Display pictures and information on the property.	1.5	
+done			T-6C	Show the properties on a map	1	
+			T-6D	Be able to add new properties to the map	2	
+			AT03	Acceptance test	.5	
+					
+			S-2A: Staff View Information
+			Task ID	Task Description	Estimate	Taken
+			T-8A	Be able to allocate tasks to staff	2	
+			T-8B	Staff are given access to information of properties, tenants and forms	2	
+			T-8C	Display results on the page	3	
+			AT04	Acceptance test	.5	
+				Story Points: 1	Total Hours:	7.5	
+			S-2C: Ability to add and review relevant forms	
+			Task ID	Task Description	Estimate	Taken
+			T-10A	All signed forms are stored in a database	2	
+			T-10B	Depending on access controls tenants and staff are able to access/ download these forms.	2	
+			T-10C	New forms can be uploaded but must be approved by the mediator.	2	
+			AT05	Acceptance test	.5	
+
+
+
