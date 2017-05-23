@@ -89,12 +89,12 @@ function encryptPassword ($password){
                 defineUAC($UAC);
             } else {
                 /* Handle invalid password. */
-                header("Location: index.php?error=invalidPassword");
+                header("Location: signInPage.php?error=invalidPassword");
                 exit();
             }
         } else {
             /* Handle invalid username. */
-            header("Location: index.php?error=invalidUsername");
+            header("Location: signInPage.php?error=invalidUsername");
             exit();       
         }
 

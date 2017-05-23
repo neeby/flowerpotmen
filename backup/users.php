@@ -15,6 +15,11 @@ Purpose of file:
             include_once("functions.php");
 			include_once("userFunctions.php");
             session_start();
+
+			if(!isset($_SESSION['UAC_Level'])){
+				header("Location: signInPage.php?error=signInRequired");
+			}			
+			
             writeMenu();
             loginDB();
             checkDB(0);

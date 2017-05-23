@@ -30,14 +30,14 @@
 			
 			defineUAC($UAC_User);
 			$_SESSION['POST_User'] = $_POST['userName'];
-			$_SESSION['POST_Pass'] = $_POST['pwd'];	
-//logging in as visitor - should be logging in as User			
+			$_SESSION['POST_Pass'] = $_POST['pwd'];				
 			header("Location: home.php");
 		} else {
-			
+			//password fields don't match
 			echo ('Please ensure password and confirm password fields match.');
 		  }		
 	 } else {
+		//not all mandatory fields completed
 		echo ('Please ensure all fields are completed'); 
 	 }
 
@@ -75,7 +75,7 @@
 					<td><input type="text" name="firstName" value="<?php echo $_POST['firstName'] ?>" /><br /></td>
 				</tr>
 				<tr>
-					<td><label for="otherName">Other Names *: </label></td>
+					<td><label for="otherName">Other Names: </label></td>
 					<td><input type="text" name="otherName" value="<?php echo $_POST['otherName'] ?>" /><br /></td>
 				</tr>	
 				<tr>
@@ -91,7 +91,7 @@
 					<td><input type="email" name="email" value="<?php echo $_POST['email'] ?>" /><br /></td>
 				</tr>				
 				<tr>
-					<td><label for="tel">Telephone: </label></td>
+					<td><label for="tel">Telephone *: </label></td>
 					<td><input type="text" name="tel" value="<?php echo $_POST['tel'] ?>" /><br /></td>
 				</tr>				
 				<tr>
@@ -105,7 +105,7 @@
 	</div>
 	
 <p>Note: Please make sure your details are correct before submitting form and that all fields marked with * are completed!.</p>
-
+<a href="properties.php">Browse as guest user</a>
 <?php
 
 //print_r($_SESSION);

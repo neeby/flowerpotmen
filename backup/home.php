@@ -22,7 +22,7 @@ Purpose of file:
         */
 
         session_start();
-        include("functions.php");
+        include_once("functions.php");
 
          if(empty($_SESSION)){
             loginDB();

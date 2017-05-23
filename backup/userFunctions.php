@@ -45,7 +45,12 @@ function queryUser ($value) {
 
 	$db = $_SESSION['db'];
 	$encryptedPassword = encryptPassword($password);
-
+	
+	//safeguard to ensure only David/admin can create higher access levels
+	if ($_SESSION['UAC_Level'] !== "Owner" && $_SESSION['UAC_Level'] !== "Admin"){
+		$Staff = 1;
+	}
+	
 	$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES (";
 	$sql .= "'{$userName}', ";
 	$sql .= "'{$encryptedPassword}', ";
@@ -81,19 +86,24 @@ function queryUser ($value) {
 
 	$db = $_SESSION['db'];
 	$encryptedPassword = encryptPassword($updatedUserDetails["password"]);
+//still needs check to ensure no one can delete David
+	if ($_SESSION['UAC_Level'] == "Owner" || $_SESSION['UAC_Level'] == "Admin"){
+		foreach ($updatedUserDetails as $key => $value) {
+			
+			$sql = "UPDATE Users SET {$key}='{$value}' WHERE userName='{$userName}'";
+			//echo $sql . "<br>";
+			if (mysqli_query($db, $sql)){
+				//return true;
+			} else {
+				echo $key;
+				return false;
+			}
+		}	
+		return true;		
+	}
+	echo("Access level insuficient.");
+	return false;	
 
-	foreach ($updatedUserDetails as $key => $value) {
-		
-		$sql = "UPDATE Users SET {$key}='{$value}' WHERE userName='{$userName}'";
-		//echo $sql . "<br>";
-		if (mysqli_query($db, $sql)){
-			//return true;
-		} else {
-			echo $key;
-			return false;
-		}
-	}	
-	return true;
  }//end editUser
 
  /*
@@ -107,14 +117,18 @@ function queryUser ($value) {
 	
 	$db = $_SESSION['db'];
 	
-	$sql = "DELETE FROM Users WHERE userName='{$user}'";
-	
-	if (mysqli_query($db, $sql)){
-		return true;
-	} else {
-		return false;
+	if ($_SESSION['UAC_Level'] == "Owner" || $_SESSION['UAC_Level'] == "Admin"){	
+		$sql = "DELETE FROM Users WHERE userName='{$user}'";
+		
+		if (mysqli_query($db, $sql)){
+			return true;
+		} else {
+			return false;
+		}
 	}
-	 
+	echo("Access level insuficient.");
+	return false;
+	
  }//end deleteUser
 
  /*
