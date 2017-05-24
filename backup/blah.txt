@@ -30,7 +30,8 @@
 //ToDo
 
 forgot to add gumtree id search field - trivial addition => add after Jesse finishes updating his tables
-add redirect if $_SESSION['UAC_Level'] isn't sufficient for area
+add redirect if $_SESSION['UAC_Level'] isn't sufficient for area - done
+tidy contact and troubleshoot prefinal
 
 //overall status
 
@@ -50,14 +51,14 @@ done			T-1B	Add people to the database	2
 
 			S-0C: Managing the accounts as David (Access Control)	
 
-to be added			T-2A	Be able to login as David	1	
+done		T-2A	Be able to login as David	1	
 done			T-2B	Have a page where you can view all current members and use CRUD	3	
 done			T-2C	Be able to access properties and CRUD	3	
 			T-2D	Check acceptance criteria and test	1	
 				Story Points: 16	Total Hours:	8	
 			S-0D: Mediator Role	
 			Task ID	Task Description	Estimate	Taken
-done?			T-3A	Have a login role that has almost the same access as David	1	
+done			T-3A	Have a login role that has almost the same access as David	1	
 			T-3B	Be able to approve changes to the site from staff and property owners.	1	
 done			T-3C	Have rights to be able to Create, Update, Delete	1	
 
@@ -69,37 +70,37 @@ done			T-4A	Create a search panel page using HTML	1.5
 done			T-4B	Use SQL and PHP to search the database for results	6	
 done			T-4C	Display results on the page	1.5	
 done			T-4D	Be able to filter by categories (price, rooms, house location etc.)	4.5	
-to be added			T-4E	Be able to search using the property ID given on gumtree.	.5	
+done except db requires column added for gumTreeId			T-4E	Be able to search using the property ID given on gumtree.	.5	
 			AT01	Acceptance test	1	
 				
 			S-1B: Property View Calendar
 			Task ID	Task Description	Estimate	Taken
-			T-5A	Display a calendar of availability on the website.	3	
-			T-5B	Be able to change the availability using PHP.	5	
-			T-5C	Book an inspection time on the calendar.	3	
-			AT02	Acceptance test	1	
+jesse			T-5A	Display a calendar of availability on the website.	3	
+jesse		T-5B	Be able to change the availability using PHP.	5	
+jesse			T-5C	Book an inspection time on the calendar.	3	
+ben 			AT02	Acceptance test	1	
 				
 			S-1C: View Property Information	
 			Task ID	Task Description	Estimate	Taken
 done			T-6A	Have a separate webpage for each property.	1.5	
 done			T-6B	Display pictures and information on the property.	1.5	
 done			T-6C	Show the properties on a map	1	
-			T-6D	Be able to add new properties to the map	2	
+done			T-6D	Be able to add new properties to the map	2	
 			AT03	Acceptance test	.5	
 					
 			S-2A: Staff View Information
 			Task ID	Task Description	Estimate	Taken
-			T-8A	Be able to allocate tasks to staff	2	
-			T-8B	Staff are given access to information of properties, tenants and forms	2	
-			T-8C	Display results on the page	3	
+jesse			T-8A	Be able to allocate tasks to staff	2	
+jesse			T-8B	Staff are given access to information of properties, tenants and forms	2	
+\/			T-8C	Display results on the page	3	
 			AT04	Acceptance test	.5	
 				Story Points: 1	Total Hours:	7.5	
 			S-2C: Ability to add and review relevant forms	
-			Task ID	Task Description	Estimate	Taken
+jesse			Task ID	Task Description	Estimate	Taken
 			T-10A	All signed forms are stored in a database	2	
 			T-10B	Depending on access controls tenants and staff are able to access/ download these forms.	2	
 			T-10C	New forms can be uploaded but must be approved by the mediator.	2	
-			AT05	Acceptance test	.5	
+_____		AT05	Acceptance test	.5	
 
 
 
