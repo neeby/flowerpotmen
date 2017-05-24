@@ -72,5 +72,6 @@ Cat / catpassword / 1 (User)<br>
 Wolf / wolfpassword / 2 (Staff)<br>
 Dog / dogpassword / 3 (Admin)<br>
 Fox / foxpassword / 4 (Owner)<br>
+David / adavid / 5 (Big Boss)<br>
 
 </body>

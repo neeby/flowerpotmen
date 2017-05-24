@@ -21,18 +21,6 @@ Purpose of file:
 
     <body class="property">
         <br><br><form action="properties.php" method="GET" style='text-align: center;'>
-		<!--
-            Search By: <select name='searchParam'>
-                <option value='Suburb'>Suburb</option>
-                <option value='Post'>Post Code</option>
-                <option value='Bed'>Bedroom Number</option>
-                <option value='Bath'>Bathroom Number</option>
-                <option value='Car'>Carport Number</option>
-				<option value='minWeeklyRent'>Min Weekly Rent</option>
-				<option value='maxWeeklyRent'>Max Weekly Rent</option>
-			
-            </select>
-		-->
 		
 			<table>
 				<tr>
@@ -64,6 +52,10 @@ Purpose of file:
 						<label for="maxWeeklyRent">Max Weekly Rent:</label>
 						<input type='number' id='maxWeeklyRent' name='maxWeeklyRent' min="0" onchange="document.getElementById('minWeeklyRent').max=this.value;" value="<?php echo $_GET['maxWeeklyRent'];?>">					
 					</td>
+					<td>
+						<label for="gumTreeId">Gumtree Id:</label>
+						<input type='text' name='gumTreeId'>					
+					</td>
 				</tr>		
 			</table>
 		
@@ -94,13 +86,12 @@ Purpose of file:
             relevant results.
         */
 
-        //if(!empty($_GET['searchParam']) AND isset($_GET['searchValue'])){
-			
+		
 		if(!empty($_GET['searchParam'])){
 
             returnShortPropertyList('*', '');//return all
         }			
-			
+		
 		if(!empty($_GET['Suburb']) or isset($_GET['Post']) or isset($_GET['Bed']) or isset($_GET['Bath']) or isset($_GET['Car']) or isset($_GET['minWeeklyRent']) or isset($_GET['minWeeklyRent'])){
             /*
                 Now that there is a search paramater and a search value,

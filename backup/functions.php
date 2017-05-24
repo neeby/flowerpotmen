@@ -118,6 +118,9 @@ function encryptPassword ($password){
             case '4':
                 $_SESSION['UAC_Level'] = 'Owner';
                 break;
+            case '5':
+                $_SESSION['UAC_Level'] = 'David';
+                break;
             default:
                 $_SESSION['UAC_Level'] = 'Visitor';
                 break;
@@ -202,6 +205,7 @@ function encryptPassword ($password){
                     echo "<th>" . $OwnerMenuList[$x] . "</th>";
                 }
                 break;
+			case "David":	
             case "Admin":
                 for($x = 0; $x < count($AdminMenuList); $x++){
                     echo "<th>" . $AdminMenuList[$x] . "</th>";
@@ -286,10 +290,14 @@ function encryptPassword ($password){
 			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
 			$query .= "weeklyRent <= '{$_GET['maxWeeklyRent']}'";
 		}	
-		
+		//for return all properties
 		if (!empty($_GET['searchParam'])){
 			$query = "SELECT * FROM properties";
 		}
+		// Gumtree ID search over-rides other parameters
+		if (!empty($_GET['gumTreeId'])){
+			$query = "SELECT * FROM properties";
+		}		
         
         mysqli_query($db, $query) or die('Error querying database.');
 
@@ -432,6 +440,9 @@ function encryptPassword ($password){
                     break;
                 case '4':
                     return 'Owner';
+                    break;
+                case '5':
+                    return 'David';
                     break;
                 default:
                     return "Vistor";
