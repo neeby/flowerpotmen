@@ -33,6 +33,7 @@ Purpose of file:
          }
          writeMenu();
 		 //print_r($_SESSION);
+		 echo("<form action='contact.php'><input type='submit' value='Contact Us' /></form>	");
     ?>
     
     <title>

@@ -71,7 +71,6 @@ Purpose of file:
         </form>
         <?PHP
              echo("<form action='AddProperty.php'><input type='submit' value='Add property' /></form>	");		
-			 echo("<form action='contact.php'><input type='submit' value='Contact Us' /></form>	");
 ?>
         <br>
         <?PHP
