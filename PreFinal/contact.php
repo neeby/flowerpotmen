@@ -70,10 +70,8 @@ EOL;
 		if(isset( $_POST['submit'] )){
 
 			//insert to Contact db
-			//$requestDate = new DateTime();
-			//$requestDate->format('d-m-y');
-
-			if(addContactRequest ( $name, $email, $phone, $call, $priority, $type, $message, "dateplaceholder", "New enquiry")){
+			$requestDate = (new \DateTime())->format('d-m-y H:i:s');
+			if(addContactRequest ( $name, $email, $phone, $call, $priority, $type, $message, $requestDate, "New enquiry")){
 				echo "Thank You! Message sent<br>";	
 			} else {
 				echo "Warning! Message failed, please try the following link 
