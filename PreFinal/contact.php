@@ -2,7 +2,7 @@
 	session_start();
 	include_once("functions.php");
 	include_once("contactFunctions.php");
-
+	loginDB();
 	$name = $_POST['name'];
 	$email = $_POST['email'];
 	$phone = $_POST['phone'];
@@ -14,23 +14,16 @@
 	//$recipient = "benjamin.shinas@gmail.com";
 	//$subject = "Contact Form";
 	//$mailheader = "From: $email \r\n";
-
-?>
-
-<html>
-<head>
-	<title>Contact Page</title>
-</head>
-<body>
-
-	<form action="contact.php" method="POST">
+	
+	$contactForm = <<<EOL
+		<form action="contact.php" method="POST">
 		<p>Name</p> <input type="text" name="name">
 		<p>Email</p> <input type="text" name="email">
 		<p>Phone</p> <input type="text" name="phone">
 
 		<p>Request Phone Call:</p>
-		Yes:<input type="radio" value=1 name="call" checked><br />
-		No:<input type="radio" value=0 name="call"><br />
+		Yes:<input type="radio" value='Yes' name="call" checked><br />
+		No:<input type="radio" value='No' name="call"><br />
 
 		<p>Priority</p>
 		<select name="priority" size="1">
@@ -52,15 +45,35 @@
 		<p>Message</p><textarea name="message" rows="6" cols="25"></textarea><br />
 		<input type="submit" name="submit"><input type="reset" value="Clear">
 	</form>
+EOL;
+
+?>
+
+<html>
+<head>
+	<title>Contact Page</title>
+</head>
+<body>
 	
 	<?php
+	
+		switch ($_SESSION['UAC_Level']){
+			case 'Staff':
+			case 'Admin':
+			case 'David':
+				writeContactRequests();
+				break;
+			default:
+			echo $contactForm;
+		}
+
 		if(isset( $_POST['submit'] )){
 
 			//insert to Contact db
 			//$requestDate = new DateTime();
-			//$requestDate->format('dd/mm/yy');
-			
-			if(addContactRequest ( $name, $email, $phone, $call, $priority, $type, $message, "date", "New enquiry")){
+			//$requestDate->format('d-m-y');
+
+			if(addContactRequest ( $name, $email, $phone, $call, $priority, $type, $message, "dateplaceholder", "New enquiry")){
 				echo "Thank You! Message sent<br>";	
 			} else {
 				echo "Warning! Message failed, please try the following link 
@@ -75,6 +88,7 @@
 			}
 			*/
 		}
+
 	?>
 	
 	<a href="properties.php">Return to Properties Page</a>
