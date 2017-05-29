@@ -5,9 +5,11 @@ Purpose of file:
     > Create a master file of referenceable functions.
 -->
 <head>
+
     <link rel='stylesheet'  type='text/css' href='stylesheet.css'>
 </head>
 <?PHP
+
     function loginDB(){
         /*
         > Define required things
@@ -41,38 +43,39 @@ Purpose of file:
             return true;
         }
     }
-	
-function queryUser ($value) {
 
-        global $db;
-
-        //$query = "SELECT * FROM Users WHERE userName = '{$value}'";//=========================change back to users when test done
-        $query = "SELECT * FROM Users WHERE userName = '{$value}'";
-		mysqli_query($db, $query) or die('Error querying database.');
-
-        $result = mysqli_query($db, $query);
-        $row = mysqli_fetch_array($result);
-
-		if (strlen ($row['userName'])>0) {
-			return true;
-
-		} else {
-			return false;
-		}
-		
-	
-}//end queryUser
-
-
+/*
+    <summary>
+		Function to encrypt a password.
+    </summary>
+    <param name="$password">Password to be encrypted</param>
+    <returns>the encrypted password</returns>
+*/
 function encryptPassword ($password){
 	
 	return crypt ($password,"pourAchunkOfSaltAllOverThis");
-}
-function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Description,$Image,$WeeklyRent){
-  	global $db;
-    $Code = "SELECT COUNT(*) FROM Properties WHERE Suburb = '".$Suburb."'"
- 	$sql = "INSERT INTO `Properties` (`Code``Address`, `Suburb`, `Postcode`, `BedRooms`, `BathRooms`, `CarPorts`, `Description`, `Image`, `WeeklyRent`) VALUES (";
-    $sql .= "'{$Suburb}', ";
+	
+}//end encryptPassword
+
+
+
+function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Description,$Image,$WeeklyRent,$Owner){
+  
+    global $db;
+    $query2 = "SELECT COUNT(Suburb) FROM Properties WHERE Suburb = '".$Suburb."';";
+    $count = mysqli_query($db, $query2);
+ 
+    $Code = $Suburb;
+    $number=   mysqli_fetch_array($count);
+    if($number[0]=="0"){
+            $Code.="0";
+
+    }else{
+            $Code.=$number[0];
+
+    }
+    	$sql = "INSERT INTO `Properties` (`Code`,`Address`, `Suburb`, `Postcode`, `BedRooms`, `BathRooms`, `CarPorts`, `Description`, `Image`, `WeeklyRent`,`Verified`,`Owner`) VALUES (";
+    $sql .= "'{$Code}', ";
     $sql .= "'{$Address}', ";
 	$sql .= "'{$Suburb}', ";
 	$sql .= "'{$PostCode}', ";
@@ -81,9 +84,12 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
 	$sql .= "'{$CarPorts}', ";
 	$sql .= "'{$Description}', ";
 	$sql .= "'{$Image}', ";
-	$sql .= "'{$WeeklyRent}'";								
+	$sql .= "'{$WeeklyRent}',";	
+    $sql .= "'0',";	
+    $sql .= "'{$Owner}'";								
 	$sql .= ')';
-	$query = "CREATE TABLE test ( UserName varchar(255), inspectionTime varchar(255))";
+    
+	$query = "CREATE TABLE `".$Code."` ( UserName varchar(255), inspectionTime varchar(255))";
 
 	mysqli_query($db, $query);
 
@@ -95,43 +101,22 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
     
     
 }
- function addUser ( $userName, $password, $Staff, $firstName, $otherName, $surName, $DOB, $email, $phone, $address) {
+	function 
+        fectchArray(){
+        global $db;
 
-	global $db;
-	$encryptedPassword = encryptPassword($_POST['pwd']);
-	//$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES ('" . $_POST['userName'] . "', '" . $encryptedPassword . "', '" . $accessLvl . "', '', '', '', NULL, '', '', '')";
-	//$DOB = NULLIF($DOB , '');
-	
-	$sql = "INSERT INTO `Users` (`userName`, `password`, `Staff`, `firstName`, `otherName`, `surName`, `DOB`, `email`, `phone`, `address`) VALUES (";
-	$sql .= "'{$userName}', ";
-	$sql .= "'{$encryptedPassword}', ";
-	$sql .= "'{$Staff}', ";
-	$sql .= "'{$firstName}', ";
-	$sql .= "'{$otherName}', ";
-	$sql .= "'{$surName}', ";
-	$sql .= "'{$DOB}', ";
-	$sql .= "'{$email}', ";
-	$sql .= "'{$phone}', ";	
-	$sql .= "'{$address}'";								
-	$sql .= ')';
-	
-	if (mysqli_query($db, $sql)){
-		return true;
-	} else {
-		return false;
-	}
-	 
- }//end insertToDB
-
- function deleteUser ($user) {
-	
-	global $db;
-	
-	$sql = "DELETE FROM Users WHERE userName='{$user}'";
-	mysqli_query($db, $sql);
-	 
- }//end deleteUser
-
+        $query = "SELECT * FROM Properties";
+        $result = mysqli_query($db, $query);
+        $row = mysqli_fetch_array($result);
+              
+        while ($row = mysql_fetch_assoc($result)) {
+            echo $row["Address"];
+            echo $row["Suburb"];
+            echo $row["PostCode"];
+            }   
+    
+    
+    }
     function verifyUser($user, $pass){
         /*
         > Destory previous session through Logout()
@@ -164,12 +149,12 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
                 defineUAC($UAC);
             } else {
                 /* Handle invalid password. */
-                header("Location: index.php?error=invalidPassword");
+                header("Location: signInPage.php?error=invalidPassword");
                 exit();
             }
         } else {
             /* Handle invalid username. */
-            header("Location: index.php?error=invalidUsername");
+            header("Location: signInPage.php?error=invalidUsername");
             exit();       
         }
 
@@ -192,6 +177,9 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
                 break;
             case '4':
                 $_SESSION['UAC_Level'] = 'Owner';
+                break;
+            case '5':
+                $_SESSION['UAC_Level'] = 'David';
                 break;
             default:
                 $_SESSION['UAC_Level'] = 'Visitor';
@@ -254,15 +242,14 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
         session_destroy();
     }
 
-    function writeMenu($UAC_Level){
-        global $UAC_Level;
+    function writeMenu(){
 
         $OwnerMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Admins"), hyper("Logout"));
         $AdminMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Logout"));
         $StaffMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Logout"));
         $UserMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
-        $VisitorMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
-        
+        //$VisitorMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
+        $VisitorMenuList = array(hyper("Properties"), hyper("SignIn"), hyper("Register"));
         /* 
             Here we pray that the session stuff is working as it should. 
             There should probably be a check in here somewhere. TODO probs.
@@ -278,6 +265,7 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
                     echo "<th>" . $OwnerMenuList[$x] . "</th>";
                 }
                 break;
+			case "David":	
             case "Admin":
                 for($x = 0; $x < count($AdminMenuList); $x++){
                     echo "<th>" . $AdminMenuList[$x] . "</th>";
@@ -362,48 +350,14 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
 			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
 			$query .= "weeklyRent <= '{$_GET['maxWeeklyRent']}'";
 		}	
-		
+		//for return all properties
 		if (!empty($_GET['searchParam'])){
 			$query = "SELECT * FROM properties";
 		}
-		
-		switch($placeholder){
-        //switch($searchParam){
-            case "suburb":
-				//$query = "SELECT * FROM properties WHERE suburb LIKE '%{$searchValue}%'";
-                break;
-            case "Post":
-              //  $query = "SELECT * FROM properties WHERE postcode = '{$searchValue}'";
-                break;
-            case "Bed":
-               // $query = "SELECT * FROM properties WHERE bed = '{$searchValue}'";
-                break;
-            case "Bath":
-               // $query = "SELECT * FROM properties WHERE bath = '{$searchValue}'";
-                break;
-            case "Car":
-               // $query = "SELECT * FROM properties WHERE car = '{$searchValue}'";
-                break;
-            case "minWeeklyRent":
-               // $query = "SELECT * FROM properties WHERE weeklyRent >= '{$searchValue}'";
-                break;
-            case "maxWeeklyRent":
-                //$query = "SELECT * FROM properties WHERE weeklyRent <= '{$searchValue}'";
-                break;
-            case "*":
-               // $query = "SELECT * FROM properties";
-                break;
-            default:
-			
-                /* 
-                    The only way that this default clause could be triggered is that if 
-                    the user manually changes the searchParam GET value. In this case
-                    we'll return them to properties.php with an error message.
-                */
-				
-                //header("Location: properties.php?error=invalidSearchParam");
-                //exit();
-        }
+		// Gumtree ID search over-rides other parameters
+		if (!empty($_GET['gumTreeId'])){
+			$query = "SELECT * FROM properties";
+		}		
         
         mysqli_query($db, $query) or die('Error querying database.');
 
@@ -520,6 +474,9 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
                 break;
             case 'properties':
                 $MenuToPrint = array("New Property", "View Properties", "Edit Properties", "Delete Properties");
+            case 'staff':
+                $MenuToPrint = array("New Properties", "View properties", "Edit properties", "Delete properties");
+
             default:
                 /* Probably should think of something to put here. */
         }
@@ -546,6 +503,9 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
                     break;
                 case '4':
                     return 'Owner';
+                    break;
+                case '5':
+                    return 'David';
                     break;
                 default:
                     return "Vistor";
