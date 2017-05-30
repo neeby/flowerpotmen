@@ -19,7 +19,6 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
         include_once('functions.php');
 
 		Logout();
-		writeMenu();
 
         /*
             This section here checks for a GET error and actions accordingly.
@@ -66,7 +65,7 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
 	
 	
 
- <br><br>Remove before live<br><br>   
+    
 <br><br>Available Usernames/Passwords/AccessLevels:<br><br>
 
 Cat / catpassword / 1 (User)<br>
