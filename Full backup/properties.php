@@ -53,8 +53,10 @@ Purpose of file:
 						<input type='number' id='maxWeeklyRent' name='maxWeeklyRent' min="0" onchange="document.getElementById('minWeeklyRent').max=this.value;" value="<?php echo $_GET['maxWeeklyRent'];?>">					
 					</td>
 					<td>
+					<!-- To be added
 						<label for="gumTreeId">Gumtree Id:</label>
-						<input type='text' name='gumTreeId'>					
+						<input type='text' name='gumTreeId'>	
+					-->
 					</td>
 				</tr>		
 			</table>
@@ -64,7 +66,12 @@ Purpose of file:
             <input type='submit' value='Search'>
             <?PHP 
                 if($_SESSION['UAC_Level'] !== 'Visitor' && $_SESSION['UAC_Level'] !== 'User' ){ 
-                    echo "<a href='properties.php?searchParam=*'><input type='button' value='View All Properties'></a>";
+					if($_SESSION['UAC_Level'] == 'Owner'){
+						echo "<a href='properties.php?searchParam=myProperties'><input type='button' value='View My Properties'></a>";
+					} else {
+						echo "<a href='properties.php?searchParam=*'><input type='button' value='View All Properties'></a>";	
+					}
+                    
                     
                 }
             ?>

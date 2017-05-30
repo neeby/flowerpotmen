@@ -10,6 +10,7 @@
 	$priority = $_POST['priority'];
 	$type = $_POST['type'];
 	$message = $_POST['message'];
+	$errorMessage = "";
 	//$formcontent=" From: $name \n Phone: $phone \n Call Back: $call \n Priority: $priority \n Type: $type \n Message: $message";
 	//$recipient = "benjamin.shinas@gmail.com";
 	//$subject = "Contact Form";
@@ -47,6 +48,22 @@
 	</form>
 EOL;
 
+	if (isset($_POST['contactToEdit'])){
+		updateRequestStatus ( $_POST['contactToEdit'], "Completed");
+	}
+
+	if (isset($_POST['contactToDelete'])){
+		if ($_SESSION['UAC_Level'] == "David" || $_SESSION['UAC_Level'] == "Admin"){
+			deleteRequest ($_POST['contactToDelete']);	
+
+		} else {
+			$errorMessage =  "Insufficient Access to delete contact request";
+		}
+		
+	}
+
+
+
 ?>
 
 <html>
@@ -56,12 +73,14 @@ EOL;
 <body>
 	
 	<?php
-	
+		writeMenu();
+		
 		switch ($_SESSION['UAC_Level']){
 			case 'Staff':
 			case 'Admin':
 			case 'David':
 				writeContactRequests();
+				echo $errorMessage;
 				break;
 			default:
 			echo $contactForm;
@@ -87,9 +106,9 @@ EOL;
 			*/
 		}
 
+		
+		
 	?>
-	
-	<a href="properties.php">Return to Properties Page</a>
 	
 
 </body>

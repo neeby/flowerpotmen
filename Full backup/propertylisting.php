@@ -7,7 +7,7 @@ Purpose of file:
 <html>
     <head>
         <?PHP
-            include("functions.php");
+            include_once("functions.php");
             session_start();
             writeMenu();
         
@@ -22,19 +22,19 @@ Purpose of file:
     <body>
         <?PHP
             loginDB();
-            $query = "SELECT * FROM properties WHERE uniqueCode = '{$PropertyID}'";
+            $query = "SELECT * FROM Properties WHERE Code = '{$PropertyID}'";
             mysqli_query($db, $query) or die('Error querying database.');
 
             $queryResult = mysqli_query($db, $query);
             while ($row = $queryResult->fetch_assoc()) {
-                $address = $row['address'];
-                $suburb = $row['suburb'];
-                $postcode = $row['postcode'];
-                $bed = $row['bed'];
-                $bath = $row['bath'];
-                $car = $row['car'];
-                $description = $row['description'];
-                if ($row['image'] == ""){
+                $address = $row['Address'];
+                $suburb = $row['Suburb'];
+                $postcode = $row['PostCode'];
+                $bed = $row['BedRooms'];
+                $bath = $row['BathRooms'];
+                $car = $row['CarPorts'];
+                $description = $row['Description'];
+                if ($row['Image'] == ""){
                     $image = "images/pingu.jpg";
                 } else {
                     $image = "images/" . $row['image'];

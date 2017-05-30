@@ -12,7 +12,7 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
     <link rel='stylesheet'  type='text/css' href='stylesheet.css'>
 </head>
 
-<body class="home">
+<body>
 
     <?PHP
         session_start();
@@ -20,7 +20,7 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
 		include_once('userFunctions.php');
         /*
         Checking for _GET value 'Logout', if this is true, we call the logout function
-        which will kill a lot of session stuffs.
+        which will kill the session.
         */
 
         if(isset($_GET['logout'])){
@@ -29,31 +29,30 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
         if(isset($_SESSION['UAC_Level'])){
             header("Location: home.php");
         }
-/*move to signin page
-        if(isset($_GET["error"])){
-            switch ($_GET['error']) {
-                case 'invalidUsername':
-                    echo "<div style='text-align: center;'>Sorry, that username is not valid.</div>";
-                    break;
-                case 'invalidPassword':
-                    echo "<div style='text-align: center;'>Sorry, that password is not valid.</div>";
-                    break;
-                case 'SignupSuccess':
-                    echo "<div style='text-align: center;'>Congratulations, signup successful. Please sign in.</div>";
-                    break;
-                case 'SignupFailure':
-                    echo "<div style='text-align: center;'Sorry, there was an issue when we tried to sign you up. Please try again.</div>";
-                    break;
-                default:
-                    echo "<div style='text-align: center;'>Sorry, I'm not sure what you did there.</div>";
-                    break;
-            }
-        }
-		*/
+
 		writeMenu();
 
 		//print_r($_SESSION)		
 		
     ?>
+	<h1 style="text-align:center">Davids Property Rentals </h1>
+	
+	<div id="map" style="width:800px;height:600px;margin:auto;"></div>
+	
+	</div>
+	
+	
+<script>
+function myMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(-27.518819, 153.050280),
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    }
+var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
+</script>	
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ9Cvf5punc60HM2DoyPlI69E1fnPqIgc&callback=myMap"></script>
 
 </body>

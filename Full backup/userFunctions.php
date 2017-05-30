@@ -199,9 +199,6 @@ function queryUser ($value) {
 */
 function writeUserListFull($options){//name changed or will break with Cam's
 
-	//TODO
-	//add Access level checks - so someone can only edit/delete/create the appropriate lvl
-
 	$db = $_SESSION['db'];
 	$query = "SELECT * FROM Users";
 	$queryResult = mysqli_query($db, $query) or die('Error querying database.');

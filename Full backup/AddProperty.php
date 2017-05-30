@@ -13,7 +13,7 @@ session_start();
 	loginDB();
 	
 addHouse ( $_POST['Address'], $_POST['Suburb'], $_POST['PostCode'], $_POST['BedRooms'], $_POST['BathRooms'], $_POST['CarPorts'] , $_POST['Description'] , $_POST['Image'] , $_POST['WeeklyRent'],$_SESSION['POST_User'] );
-			echo ($_SESSION['POST_User']);
+			echo $_SESSION['POST_User'];
 			header("Location: home.php");
 
 	
@@ -27,6 +27,9 @@ addHouse ( $_POST['Address'], $_POST['Suburb'], $_POST['PostCode'], $_POST['BedR
 </head>
 <body>
 
+<?php 
+	writeMenu(); 
+?>
 
 	<div align="center">
 		<form action='' method='POST'>
@@ -35,7 +38,7 @@ addHouse ( $_POST['Address'], $_POST['Suburb'], $_POST['PostCode'], $_POST['BedR
 
 				<tr>
 					<td><label for="Address">Address: </label></td>
-					<td><input type="text" name="Address" value="<?php echo(  $_POST["Address"] ?>" required/><br /></td>
+					<td><input type="text" name="Address" value="<?php echo $_POST["Address"] ?>" required/><br /></td>
 				</tr>
 				<tr>
 					<td><label for="Suburb">Suburb: </label></td>

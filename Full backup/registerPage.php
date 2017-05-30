@@ -2,6 +2,7 @@
 	include_once("functions.php");
 	include_once('userFunctions.php');
 	session_start();
+	
 //check if submit is set
    if ( isset( $_POST['Submit'] ) ) {
 
@@ -52,6 +53,9 @@
 </head>
 <body>
 
+<?php 
+	writeMenu(); 
+?>
 
 	<div align="center">
 		<form action='' method='POST'>

@@ -105,8 +105,7 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
     
     
 }
-	function 
-        fectchArray(){
+	function fectchArray(){
         global $db;
 
         $query = "SELECT * FROM Properties";
@@ -118,8 +117,6 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
             echo $row["Suburb"];
             echo $row["PostCode"];
             }   
-    
-    
     }
     function verifyUser($user, $pass){
         /*
@@ -221,6 +218,9 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
             case "Admins":
                 return "<a href='admins.php'>Admins</a>";
                 break;
+            case "Contact":
+                return "<a href='contact.php'>Contact</a>";
+                break;
             case "Logout":
                 return "Welcome " . $_SESSION['POST_User'] . " (" . $_SESSION['UAC_Level'] . ")<br><a href='index.php?logout=true'>Logout</a>";
                 break;
@@ -248,12 +248,12 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
 
     function writeMenu(){
 
-        $OwnerMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Admins"), hyper("Logout"));
-        $AdminMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Logout"));
-        $StaffMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Logout"));
-        $UserMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
-        //$VisitorMenuList = array(hyper("Home"), hyper("Properties"), hyper("Logout"));
-        $VisitorMenuList = array(hyper("Properties"), hyper("SignIn"), hyper("Register"));
+
+        $OwnerMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Admins"), hyper("Contact"), hyper("Logout"));
+        $AdminMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Contact"), hyper("Logout"));
+        $StaffMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Contact"), hyper("Logout"));
+        $UserMenuList = array(hyper("Home"), hyper("Properties"), hyper("Contact"), hyper("Logout"));
+        $VisitorMenuList = array(hyper("Properties"), hyper("SignIn"), hyper("Register"), hyper("Contact"));		
         /* 
             Here we pray that the session stuff is working as it should. 
             There should probably be a check in here somewhere. TODO probs.
@@ -443,13 +443,8 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
                 $TableToPrint = $TableToPrint . $SearchResults[$i][6];
                 $TableToPrint = $TableToPrint . "</td></tr><tr><td colspan='2' rowspan='4'><b>Description:</b><br>";
                 $TableToPrint = $TableToPrint . $SearchResults[$i][7];
-				
-				
-//--added
                 $TableToPrint = $TableToPrint . "</td><td><b>Weekly Rent:</b> ";
                 $TableToPrint = $TableToPrint . $SearchResults[$i][9];
-
-//--
 
                 /* Handling the photo here. */
                 $ImageAddress = $SearchResults[$i][8];

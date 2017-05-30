@@ -93,28 +93,6 @@
 	return false;
 	
  }//end deleteRequest
-
- /*
-    <summary>
-		Function to update a users username.
-    </summary>
-    <param name="$user">The user to be amended.</param>
-	<param name="$updatedUserDetails">The users new username.</param>
-    <returns>True if user is updated, otherwise returns false</returns>
-*/
- function editUserName ($user, $updatedUserDetails) {
-	
-	$db = $_SESSION['db'];
-	
-	$sql = "UPDATE Users SET userName='{$updatedUserDetails}' WHERE userName='{$user}'";
-	
-	if (mysqli_query($db, $sql)){
-		return true;
-	} else {
-		return false;
-	}
-	 
- }//end editUserName
  
  /*
     <summary>
@@ -129,17 +107,19 @@ function writeContactRequests(){
 	$queryResult = mysqli_query($db, $query) or die('Error querying database.');
 	
 	//create table headings
-	$tableHead = "<form action='users.php' method='POST'><div class='contactsTable'><table>";
+	$tableHead = "<form action='contact.php' method='POST'><div class='contactsTable'><table>";
 	
 	$tableHead .="<th>Id #</th>";
+	$tableHead .="<th>Mark Complete</th>";
+	$tableHead .="<th>Delete</th>";	
 	$tableHead .="<th>Name</th>";
 	$tableHead .="<th>Email</th>";
-	$tableHead .="<th>phone</th>";
-	$tableHead .="<th>callRequired</th>";
+	$tableHead .="<th>Phone</th>";
+	$tableHead .="<th>Call Required</th>";
 	$tableHead .="<th>Priority</th>";
 	$tableHead .="<th>Type</th>";
 	$tableHead .="<th>Message</th>";
-	$tableHead .="<th>requestDate</th>";
+	$tableHead .="<th>Request Date</th>";
 	$tableHead .="<th>Status</th>";
 
 	echo $tableHead;
@@ -150,6 +130,10 @@ function writeContactRequests(){
 		
 		$tableBody .= "<tr><td>";	
 		$tableBody .= $row['contactId'];
+		$tableBody .= "</td><td>";		
+		$tableBody .= "<input type='radio' name='contactToEdit' value='" . $row['contactId'] . "'>";
+		$tableBody .= "</td><td>";		
+		$tableBody .= "<input type='radio' name='contactToDelete' value='" . $row['contactId'] . "'>";
 		$tableBody .= "</td><td>";
 		$tableBody .= $row['Name'] ;
 		$tableBody .= "</td><td>";
@@ -172,6 +156,8 @@ function writeContactRequests(){
 		
 	}
 	$tableBody .= "</table>";	
+	$tableBody .= "<input type='submit' value='Update'></form><br><br>";			
+				
 	echo $tableBody;
  }//end writeContactRequests
  

@@ -35,7 +35,7 @@ Purpose of file:
     function checkDB($debug){
         global $db;
 
-        $query = "SELECT * FROM Users";//---------------change back
+        $query = "SELECT * FROM Users";
         if(mysqli_query($db, $query) or die('checkDB returned Error querying database.')){
             if($debug == '1'){
                 echo "Database connection successful. Testing with: '" . $query . "'";
@@ -247,7 +247,7 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
 
     function writeMenu(){
 
-        $OwnerMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Admins"), hyper("Contact"), hyper("Logout"));
+        $OwnerMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Contact"), hyper("Logout"));
         $AdminMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Staff"), hyper("Contact"), hyper("Logout"));
         $StaffMenuList = array(hyper("Home"), hyper("Properties"), hyper("Users"), hyper("Contact"), hyper("Logout"));
         $UserMenuList = array(hyper("Home"), hyper("Properties"), hyper("Contact"), hyper("Logout"));
@@ -323,77 +323,86 @@ function addHouse($Address,$Suburb,$PostCode,$BedRooms,$BathRooms,$CarPorts,$Des
         global $SearchResults;
 
 		$query = "SELECT * FROM Properties";
-
 		
 		if (!empty($_GET['Suburb'])){
-			$query .= " WHERE suburb LIKE '%{$_GET['Suburb']}%'";
+			$query .= " WHERE Suburb LIKE '%{$_GET['Suburb']}%'";
+		}
+
+		if (!empty($_GET['Post'])){
+			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
+			$query .= "PostCode = '{$_GET['Post']}'";
 		}
 		
 		if (!empty($_GET['Bed'])){
 			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
-			$query .= "bed = '{$_GET['Bed']}'";
+			$query .= "BedRooms = '{$_GET['Bed']}'";
 		}	
 
 		if (!empty($_GET['Bath'])){
 			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
-			$query .= "bath = '{$_GET['Bath']}'";
+			$query .= "BathRooms = '{$_GET['Bath']}'";
 		}
 
 		if (!empty($_GET['Car'])){
 			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
-			$query .= "car = '{$_GET['Car']}'";
+			$query .= "CarPorts = '{$_GET['Car']}'";
 		}
 
 		if (!empty($_GET['minWeeklyRent'])){
 			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
-			$query .= "weeklyRent >= '{$_GET['minWeeklyRent']}'";
+			$query .= "WeeklyRent >= '{$_GET['minWeeklyRent']}'";
 		}		
 		
 		if (!empty($_GET['maxWeeklyRent'])){
 			strlen ($query ) > 24 ? $query .= ' AND ' : $query .= ' WHERE ';
-			$query .= "weeklyRent <= '{$_GET['maxWeeklyRent']}'";
+			$query .= "WeeklyRent <= '{$_GET['maxWeeklyRent']}'";
 		}	
 		//for return all properties
 		if (!empty($_GET['searchParam'])){
-			$query = "SELECT * FROM Properties";
+			if ($_GET['searchParam'] == 'myProperties'){
+				$query = "SELECT * FROM Properties WHERE Owner = '{$_SESSION['POST_User']}'";
+			} else {
+				$query = "SELECT * FROM Properties";	
+			}
+			
 		}
 		// Gumtree ID search over-rides other parameters
 		if (!empty($_GET['gumTreeId'])){
-			$query = "SELECT * FROM Properties";
+			$query = "SELECT * FROM Properties WHERE gumTreeId = '{$_GET['gumTreeId']}' ";
 		}		
         
         mysqli_query($db, $query) or die('Error querying database.');
 
         $queryResult = mysqli_query($db, $query);
-
+//`Code`, `Address`, `Suburb`, `PostCode`, `BedRooms`, `BathRooms`, `CarPorts`, `Description`, `Image`, `WeeklyRent`, `Verified`, `Owner`)
         $ResultCount = 0;
         $SearchResults = array (
-                    array("uniqueCode"),
-                    array("address"),
-                    array("suburb"),
-                    array("postcode"),
-                    array("bed"),
-                    array("bath"),
-                    array("car"),
-                    array("description"),
-                    array("image")
+                    array("Code"),
+                    array("Address"),
+                    array("Suburb"),
+                    array("PostCode"),
+                    array("BedRooms"),
+                    array("BathRooms"),
+                    array("CarPorts"),
+                    array("Description"),
+                    array("Image")
         );
 
         $xyz = 0;
         while ($row = $queryResult->fetch_assoc()) {
             
-            $SearchResults[$xyz][0] = $row['uniqueCode'];
-            $SearchResults[$xyz][1] = $row['address'];
-            $SearchResults[$xyz][2] = $row['suburb'];
-            $SearchResults[$xyz][3] = $row['postcode'];
-            $SearchResults[$xyz][4] = $row['bed'];
-            $SearchResults[$xyz][5] = $row['bath'];
-            $SearchResults[$xyz][6] = $row['car'];
-            $SearchResults[$xyz][7] = $row['description'];
-            $SearchResults[$xyz][8] = $row['image'];
-			//---added
-			$SearchResults[$xyz][9] = $row['weeklyRent'];
-//--
+            $SearchResults[$xyz][0] = $row['Code'];
+            $SearchResults[$xyz][1] = $row['Address'];
+            $SearchResults[$xyz][2] = $row['Suburb'];
+            $SearchResults[$xyz][3] = $row['PostCode'];
+            $SearchResults[$xyz][4] = $row['BedRooms'];
+            $SearchResults[$xyz][5] = $row['BathRooms'];
+            $SearchResults[$xyz][6] = $row['CarPorts'];
+            $SearchResults[$xyz][7] = $row['Description'];
+            $SearchResults[$xyz][8] = $row['Image'];
+			
+			$SearchResults[$xyz][9] = $row['WeeklyRent'];
+
             $ResultCount++;
             $xyz++;
         }

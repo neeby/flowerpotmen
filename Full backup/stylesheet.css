@@ -2,12 +2,18 @@
     index.php
 */
 
-body.home {
-	/*
-	background: url("images/background.jpg") no-repeat;
+#homepageImage {
+
+
+}
+
+
+.home {
+
 	
+	background: url("images/background.jpg") no-repeat;
 	background-size:cover;
-	*/
+
 }
 
 .LoginFormContain {
