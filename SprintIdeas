@@ -1,0 +1,65 @@
+Cameran - 
+	Sprint 1 - 
+		Login form
+		Different menus based on user access
+		Initial front end design (paper)
+		CRUD on users
+
+	Sprint 2 - 
+		Display results on page - property listing
+		Maps
+		Have seperate pages for each property	
+		Basic sorting by category	
+
+Bob - 
+	Sprint 1 - 
+		Establish a SQL Server
+		User Access Controls - Backend
+		Able to login as David
+		Have rights to be able to CRUD
+
+	Sprint 2 - 
+		Advanced sorting by category
+		Password encryption
+		Back end of contact form
+		Designed user and contact databases
+
+Ben -
+	Sprint 1 - 
+		Sign up front end
+		Upload image
+		Concept design for sign up page
+		Created User Stories
+
+	Sprint 2 -
+		Testing Manual with pictures
+		Front end of contact form
+		Testing automatic with Selenium
+		Created and updated Sprint 2
+
+Brandon - 
+	Sprint 1 - 
+		Team meeting minutes
+		Property sales website research
+		Team agreement 
+		Website design ideas
+
+	Sprint 2 - 
+		CSS
+		Peer Review
+		Burndown Chart
+		Backup malito link in case of database failure
+
+Jesse - 
+	Sprint 1 - 
+		Database design for properties
+		Be able to approve changes to the site from staff and property owners
+		Properties CRUD
+		Created and updated Sprint 1
+		Concept design for staff page
+
+	Sprint 2 - 
+		Allocate tasks to staff		
+		Book inspections
+		Add Properties
+		My Properties
