@@ -10,9 +10,11 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
         Welcome
     </title>
     <link rel='stylesheet'  type='text/css' href='stylesheet.css'>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ9Cvf5punc60HM2DoyPlI69E1fnPqIgc&callback=myMap"></script>
+	<script src="map.js" async></script>
 </head>
 
-<body>
+<body class="home">
 
     <?PHP
         session_start();
@@ -35,24 +37,10 @@ Purpose of file: Serve as landing page for visitors, allows for login to home.
 		//print_r($_SESSION)		
 		
     ?>
-	<h1 style="text-align:center">Davids Property Rentals </h1>
+	<h1>Davids Property Rentals </h1>
 	
-	<div id="map" style="width:800px;height:600px;margin:auto;"></div>
+	<div id="map"></div>
 	
 	</div>
-	
-	
-<script>
-function myMap() {
-    var mapOptions = {
-        center: new google.maps.LatLng(-27.518819, 153.050280),
-        zoom: 13,
-        mapTypeId: google.maps.MapTypeId.HYBRID
-    }
-var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
-</script>	
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZ9Cvf5punc60HM2DoyPlI69E1fnPqIgc&callback=myMap"></script>
 
 </body>

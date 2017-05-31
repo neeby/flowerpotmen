@@ -7,12 +7,14 @@
 
 }
 
+h1 {
+	text-align:center;
+}
 
-.home {
 
-	
-	background: url("images/background.jpg") no-repeat;
-	background-size:cover;
+body.home {
+
+    background-color: LightSkyBlue;
 
 }
 
@@ -31,6 +33,14 @@
 /*
     home.php
 */
+
+#map {
+	border-style: inset;
+	width:800px;
+	height:600px;
+	margin:auto;
+}
+
 
 /*
     properties.php
