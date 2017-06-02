@@ -1,0 +1,147 @@
+/*
+    index.php
+*/
+
+#homepageImage {
+
+
+}
+
+h1 {
+	text-align:center;
+}
+
+
+body.home {
+
+    background-color: LightSkyBlue;
+
+}
+
+.LoginFormContain {
+        text-align: center;
+}
+
+#register {
+	
+}
+
+#signIn {
+	
+}
+
+/*
+    home.php
+*/
+
+#map {
+	border-style: inset;
+	width:800px;
+	height:600px;
+	margin:auto;
+}
+
+
+/*
+    properties.php
+*/
+
+body.property {
+    background-color: pink;
+    background-image: url(pingu.jpg);
+}
+
+body.property input[name=suburb]  {
+	font-size:auto;
+}
+
+body.property img{
+    max-height: 550px;
+    max-width: 550px;
+    
+}
+
+/*
+    propertyListing
+*/
+
+body.propertyListing {
+    background-image: url('http://wallpapercave.com/wp/DeIC27V.jpg');
+    background-position-x: 415px;
+    color: purple;
+}
+
+listings.propertyListing {
+    text-align: left!important;
+}
+
+body.propertyListing img{
+    max-height: 550px;
+    max-width: 550px;
+    
+}
+/*
+    Users.php
+*/
+/*
+    Users.php
+*/
+.leftSidebar {
+    float: left;
+    margin-left: 10px;
+}
+
+.leftSidebar th {
+    border-bottom: 1px solid black;
+}
+
+.leftSidebar td {
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+.leftSidebar input {
+    width: 125px;
+    background-color: lightcyan;
+}
+
+.usersTable {
+    text-align: center;
+    margin: auto;
+}
+
+.usersTable td, th {
+    border: 1px solid black;
+    width: 150px;
+}
+
+
+/*
+    functions.php
+*/
+
+.MainHeaderTable table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.MainHeaderTable th {
+    border: 1px solid black;
+}
+
+.NumSearchResults {
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.SmallPropertyListing {
+    width: 500px;
+    text-align: center;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.SolidBorder {
+    border: 1px solid black;
+}
