@@ -31,7 +31,7 @@ Purpose of file:
 
         $_SESSION['db'] = $db;
     session_start();
-			if(!isset($_SESSION['UAC_Level'])){
+			if(!isset($_SESSION['UAC_Level'])|| ($_SESSION['UAC_Level'])=="Visitor"|| ($_SESSION['UAC_Level'])=="Owner"|| ($_SESSION['UAC_Level'])=="User"){
 				header("Location: signInPage.php?error=signInRequired");
 			}	
                 writeMenu();
@@ -49,6 +49,16 @@ Purpose of file:
     $Image= $_GET['Image'];
     $Rent= $_GET['Rent'];
     $Code= $_GET['Code'];
+            
+            if ( isset( $_POST['assign'] ) ) {
+
+
+    $sql="UPDATE Properties SET Staff='".$_POST['staff']."' WHERE Code = '".$property."'";
+           mysqli_query($db,$sql);
+       // header("Location:staff.php");
+            }
+                       
+                   
            if ( isset( $_POST['Submit'] ) ) {
 echo $_POST['Address'];
 $sql = "UPDATE Properties SET Address='".$_POST['Address']."',Suburb = '".$_POST['Suburb']."',PostCode = '".$_POST['PostCode']."',BedRooms = '".$_POST['BedRooms']."',BathRooms = '".$_POST['BathRooms']."',CarPorts = '".$_POST['CarPorts']."',Description = '".$_POST['Description']."',Image = '".$_POST['Image']."',WeeklyRent = '".$_POST['WeeklyRent']."' WHERE Code='".$_POST['Code']."';";
@@ -125,16 +135,45 @@ $row=mysqli_query($db,$sql);
     }else if($type == "d"){
 $sql="DELETE FROM Properties WHERE Code ='".$property."';";
         mysqli_query($db,$sql);
-        header("Location:staff.php");
+       $sql=" DROP TABLE `".$property."`";
+                mysqli_query($db,$sql);
 
-    }else{
+        header("Location:staff.php");
+        
+
+    }  else{
         
     
     
     
     
     //
+    if($type == "I"){
+       
+$sql = "SELECT * FROM ".$property;
+$result=mysqli_query($db,$sql);
     
+
+		echo("Inspection Times for ".$property);
+		
+	
+		  echo '<table><tr>';
+    echo "<td> <b>UserName</td>"."<td><b> Inspection Time </td>";
+    echo "</tr>";
+  
+    echo "</tr>";
+      
+//
+    while ($row=mysqli_fetch_array($result,MYSQLI_NUM)) {
+         echo "<tr><td>".$row[0]."</td>"."<td>".$row[1]."</td>";
+       
+        
+    echo "</tr>";
+  //
+    }
+echo "</table>"; 
+
+    }
     //------------------------------------
  
     
@@ -156,17 +195,55 @@ $result=mysqli_query($db,$sql);
 //
     while ($row=mysqli_fetch_array($result,MYSQLI_NUM)) {
       //  echo "<td>".row[0]."</td>";
-         echo "<tr><td><img src=".$row[8]." height='42' width='42'>".$row[0]."</td>"."<td>".$row[11]."</td>"."<td>".$row[1]."</td><td><a href='staff.php?type=e&Address=".$row[1]."&Suburb=".$row[2]."&PostCode=".$row[3]."&Bed=".$row[4]."&Bath=".$row[5]."&Car=".$row[6]."&Description=".$row[7]."&Image=".$row[8]."&Rent=".$row[9]."&Code=".$row[0]."'><input type='button' value='Edit'></a></td><td><a href='staff.php?type=d&property=".$row[0]."'><input type='button' value='Delete'></a></td><td><a href='properties.php'><input type='button' value='View Inspections'></a></td>";
+         echo "<tr><td><img src=".$row[8]." height='42' width='42'>".$row[0]."</td>"."<td>".$row[11]."</td>"."<td>".$row[1]."</td><td><a href='staff.php?type=e&Address=".$row[1]."&Suburb=".$row[2]."&PostCode=".$row[3]."&Bed=".$row[4]."&Bath=".$row[5]."&Car=".$row[6]."&Description=".$row[7]."&Image=".$row[8]."&Rent=".$row[9]."&Code=".$row[0]."'><input type='button' value='Edit'></a></td><td><a href='staff.php?type=d&property=".$row[0]."'><input type='button' value='Delete'></a></td><td><a href='staff.php?type=I&property=".$row[0]."'><input type='button' value='View Inspections'></a></td>";
         if($row[10]==0){
             echo "<td><a href='staff.php?type=v&property=".$row[0]."'><input type='button' value='Verify'></a></td>";
         }else {
             echo "<td></td>";
         }
-            echo "<td><a href='properties.php'><input type='button' value='View'></a></td>";
+            echo "<td><a href='propertylisting.php?id=".$row[0]."'><input type='button' value='View'></a></td>";
+       
+        if(($_SESSION['UAC_Level'])=="David"||($_SESSION['UAC_Level'])=="Admin"){
+         echo("<td>");
+echo ("<form action='staff.php?type=s&property=".$row[0]."'method='POST'>");
+ echo(" <select name='staff'>");
+            
+
+               $sql2 = "SELECT userName FROM Users WHERE Staff = 2";
+$result2=mysqli_query($db,$sql2);
+
+    while ($row2=mysqli_fetch_array($result2,MYSQLI_NUM)) {
+            if($row[12]==""){
+                    echo("    <option disabled selected value> -- select an option -- </option>");
+
         
+        }
+           echo(" <option value='".$row2[0]."'");
+        if($row[12]==$row2[0]){
+                                   echo("selected>".$row2[0]."</option>");
+
+        }else{
+                       echo(">".$row2[0]."</option>");
+
+        }
+
+    
+
+    }//close while
+
+              echo("</select>");
+ echo(" <input type='submit' name='assign' value='Submit'>");
+echo("</form>");
+                                 echo("</td>");
+
     echo "</tr>";
+    }else {
+            echo("<td>".$row[12]."</td>");
+        }
   //
-    }
+   // } else {
+            echo "<td></td>";
+        }
 echo "</table>"; 
     }//here closes else
     ?>

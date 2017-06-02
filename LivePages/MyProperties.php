@@ -17,10 +17,9 @@ Purpose of file:
     <?PHP
     
     
-    //-----------------------------------
-            include_once("functions.php");
-    global $db;
-
+    //----------------------------------- Connect to database
+        include_once("functions.php");
+        global $db;
         define('DB_NAME', 'FlowerPotMen');
         define('DB_USER', 'root');
         define('DB_PASSWORD', 'password');
@@ -29,40 +28,41 @@ Purpose of file:
         $db = mysqli_connect(DB_HOST ,DB_USER ,DB_PASSWORD ,DB_NAME)
         or die('Error connecting to MySQL server.');
 
-        $_SESSION['db'] = $db;
+        $_SESSION['db'] = $db;//start session
     session_start();
-			if(!isset($_SESSION['UAC_Level'])){
+			if(!isset($_SESSION['UAC_Level'])){//check for access level
 				header("Location: signInPage.php?error=signInRequired");
 			}	
                 writeMenu();
 
 
         $type= $_GET['type'];
-   $property= $_GET['property'];
-    $Address= $_GET['Address'];
-    $Suburb= $_GET['Suburb'];
-   $PostCode= $_GET['PostCode'];
-   $Bed= $_GET['Bed'];
-   $Bath= $_GET['Bath'];
-    $Car= $_GET['Car'];
-    $Description= $_GET['Description'];
-    $Image= $_GET['Image'];
-    $Rent= $_GET['Rent'];
-    $Code= $_GET['Code'];
-           if ( isset( $_POST['Submit'] ) ) {
-echo $_POST['Address'];
-$sql = "UPDATE Properties SET Address='".$_POST['Address']."',Suburb = '".$_POST['Suburb']."',PostCode = '".$_POST['PostCode']."',BedRooms = '".$_POST['BedRooms']."',BathRooms = '".$_POST['BathRooms']."',CarPorts = '".$_POST['CarPorts']."',Description = '".$_POST['Description']."',Image = '".$_POST['Image']."',WeeklyRent = '".$_POST['WeeklyRent']."' WHERE Code='".$_POST['Code']."';";
+        $property= $_GET['property'];
+        $Address= $_GET['Address'];
+        $Suburb= $_GET['Suburb'];
+        $PostCode= $_GET['PostCode'];
+        $Bed= $_GET['Bed'];
+        $Bath= $_GET['Bath'];
+        $Car= $_GET['Car'];
+        $Description= $_GET['Description'];
+        $Image= $_GET['Image'];
+        $Rent= $_GET['Rent'];
+        $Code= $_GET['Code'];
+            //-----assign variables from url
+            //check if anything has been edited
+            if ( isset( $_POST['Submit'] ) ) {
+                    echo $_POST['Address'];
+                    $sql = "UPDATE Properties SET Address='".$_POST['Address']."',Suburb = '".$_POST['Suburb']."',PostCode = '".$_POST['PostCode']."',BedRooms = '".$_POST['BedRooms']."',BathRooms = '".$_POST['BathRooms']."',CarPorts = '".$_POST['CarPorts']."',Description = '".$_POST['Description']."',Image = '".$_POST['Image']."',WeeklyRent = '".$_POST['WeeklyRent']."' WHERE Code='".$_POST['Code']."';";
+                    //reload page
+                    mysqli_query($db,$sql);
+                    header("Location:MyProperties.php");
 
-               //'"$_POST['Address']"', WHERE Code = '".$property."';";
-           mysqli_query($db,$sql);
-        header("Location:MyProperties.php");
-
-       }
-  if($type == "e"){
-$sql = "SELECT * FROM Properties WHERE Code='".$property."';";
-$row=mysqli_query($db,$sql);
-
-        ?>
+                }
+                if($type == "e"){//if edit is chosen
+                        $sql = "SELECT * FROM Properties WHERE Code='".$property."';";//get all current information
+                        $row=mysqli_query($db,$sql);
+                    
+            ?>
     <div align="center">
 		<form action='' method='POST'>
 		
@@ -114,55 +114,40 @@ $row=mysqli_query($db,$sql);
 		</form>
 	</div>
 	<?PHP
-//$row=mysqli_fetch_array($result,MYSQLI_NUM)
-
+//fill form with current data
     }else if($type == "d"){
-$sql="DELETE FROM Properties WHERE Code ='".$property."';";
+        $sql="DELETE FROM Properties WHERE Code ='".$property."';";
         mysqli_query($db,$sql);
         header("Location:MyProperties.php");
 
     }else{
-        
     
-    
-    
-    
-    //
-    
-    //------------------------------------
+    //------------------------------------setup tables
  
-    
-    
-
-$sql = "SELECT * FROM Properties WHERE Owner ='".$_SESSION['POST_User']."'";
-$result=mysqli_query($db,$sql);
-    
-
-		echo("Your Properties");
-		
-	
-		  echo '<table><tr>';
-    echo "<td> <b>House Address</td>"."<td><b> Owner </td>"."<td><b>Address </td>";
-    echo "</tr>";
+            $sql = "SELECT * FROM Properties WHERE Owner ='".$_SESSION['POST_User']."'";
+            $result=mysqli_query($db,$sql);
+		        echo("Your Properties");
+                echo '<table><tr>';
+                echo "<td> <b>House Address</td>"."<td><b> Owner </td>"."<td><b>Address </td>";
+                echo "</tr>";
   
-    echo "</tr>";
+                echo "</tr>";
       
 //
-    while ($row=mysqli_fetch_array($result,MYSQLI_NUM)) {
-      //  echo "<td>".row[0]."</td>";
+    while ($row=mysqli_fetch_array($result,MYSQLI_NUM)) {//for each result
          echo "<tr><td><img src=".$row[8]." height='42' width='42'>".$row[0]."</td>"."<td>".$row[11]."</td>"."<td>".$row[1]."</td><td><a href='MyProperties.php?type=e&Address=".$row[1]."&Suburb=".$row[2]."&PostCode=".$row[3]."&Bed=".$row[4]."&Bath=".$row[5]."&Car=".$row[6]."&Description=".$row[7]."&Image=".$row[8]."&Rent=".$row[9]."&Code=".$row[0]."'><input type='button' value='Edit'></a></td><td><a href='MyProperties.php?type=d&property=".$row[0]."'><input type='button' value='Delete'></a></td><td>";
-        if($row[10]==0){
-            echo "<td>Not Verified</td>";
-        }else {
-            echo "<td>Verified</td>";
-        }
-            echo "<td><a href='propertylisting.php?id=".$row[0]."'><input type='button' value='View'></a></td>";
+            if($row[10]==0){
+                echo "<td>Not Verified</td>";
+            }else {
+                echo "<td>Verified</td>";
+            }
+                echo "<td><a href='propertylisting.php?id=".$row[0]."'><input type='button' value='View'></a></td>";
         
-    echo "</tr>";
-  //
-    }
-echo "</table>"; 
-    }//here closes else
+            echo "</tr>";
+  //end table
+            }
+            echo "</table>"; 
+            }//here closes else
     ?>
     
 
